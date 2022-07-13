@@ -1,5 +1,5 @@
-import FilmCard from '../../components/film-card';
-import Footer from '../../components/footer';
+import FilmCard from '../../components/film-card/film-card';
+import Footer from '../../components/footer/footer';
 
 function MyListPage(): JSX.Element {
   return (

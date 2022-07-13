@@ -1,5 +1,8 @@
-import FilmCard from '../../components/film-card';
-import Footer from '../../components/footer';
+import FilmCard from '../../components/film-card/film-card';
+import Footer from '../../components/footer/footer';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
+import ButtonPlay from '../../components/button-play/button-play';
+import ButtonMyList from '../../components/button-my-list/button-my-list';
 
 type MainPageProps = {
   title: string;
@@ -52,19 +55,8 @@ function MainPage({ title, genre, releaseDate }: MainPageProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <ButtonPlay/>
+                <ButtonMyList/>
               </div>
             </div>
           </div>
@@ -129,9 +121,7 @@ function MainPage({ title, genre, releaseDate }: MainPageProps): JSX.Element {
             <FilmCard />
             <FilmCard />
           </div>
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <ShowMoreButton />
         </section>
 
         <Footer/>

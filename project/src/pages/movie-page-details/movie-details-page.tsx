@@ -1,5 +1,5 @@
-import Footer from '../../components/footer';
-import FilmCard from '../../components/film-card';
+import Footer from '../../components/footer/footer';
+import FilmCard from '../../components/film-card/film-card';
 
 type MovieDetailsPageProps = {
   title: string;
