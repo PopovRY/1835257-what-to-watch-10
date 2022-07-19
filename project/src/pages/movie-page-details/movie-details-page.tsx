@@ -1,5 +1,5 @@
 import Footer from '../../components/footer/footer';
-import FilmCard from '../../components/film-card/film-card';
+import Logo from '../../components/logo/logo';
 
 type MovieDetailsPageProps = {
   title: string;
@@ -9,7 +9,7 @@ type MovieDetailsPageProps = {
 
 function MovieDetailsPage({ title, genre, releaseDate }: MovieDetailsPageProps): JSX.Element {
   return (
-    <body>
+    <>
       <div className="visually-hidden">
         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
           <symbol id="add" viewBox="0 0 19 20">
@@ -51,13 +51,7 @@ function MovieDetailsPage({ title, genre, releaseDate }: MovieDetailsPageProps):
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
+            <Logo/>
 
             <ul className="user-block">
               <li className="user-block__item">
@@ -170,16 +164,13 @@ function MovieDetailsPage({ title, genre, releaseDate }: MovieDetailsPageProps):
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
+
           </div>
         </section>
 
         <Footer />
       </div>
-    </body>
+    </>
   );
 }
 
