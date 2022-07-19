@@ -1,10 +1,9 @@
 import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 function SendingReviewsForm(): JSX.Element {
   const DEFALUT_RATING_VALUE = 0;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [comment, setComment] = useState<string>('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [rating, setRating] = useState<number>(DEFALUT_RATING_VALUE);
 
   const starsButtonList = Array.from({ length: 10 }, (_, i) => {

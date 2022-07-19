@@ -2,7 +2,7 @@ import MainPage from '../../pages/main-page/main-page';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../consts';
 import LoginPage from '../../pages/login/login-page';
-import MyListPage from '../../pages/my-list/my-list-page';
+import MyListPage from '../../pages/my-list-page/my-list-page';
 import PrivateRoute from '../private-route/private-route';
 import PlayerPage from '../../pages/player/player-page';
 import AddReviewPage from '../../pages/add-rewiew/add-review-page';
