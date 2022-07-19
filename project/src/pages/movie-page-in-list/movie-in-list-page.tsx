@@ -1,4 +1,3 @@
-import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 
 type MovieInListPageProps = {
@@ -147,10 +146,7 @@ function MovieInListPage({ title, genre, releaseDate }: MovieInListPageProps): J
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
+
           </div>
         </section>
 
