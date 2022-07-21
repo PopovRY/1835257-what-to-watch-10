@@ -1,27 +1,13 @@
-import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 import {Film} from '../../types/film';
-import {useState} from 'react';
 import Logo from '../../components/logo/logo';
+import FilmsList from '../../components/film-list/films-list';
 
 type MainPageProps = {
   films: Film[];
 }
 
 function MyListPage({films}: MainPageProps): JSX.Element {
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [count, setActiveCard] = useState(0);
-
-  const setActive = (id: number) => {
-    setActiveCard(id);
-  };
-
-  const filmsList =
-    films && films.map((film) => (
-      <FilmCard key={film.id} id={film.id} previewImage={film.previewImage} name={film.name} setActiveCard={setActive} />
-    ));
-
   return (
     <>
       <div className="visually-hidden">
@@ -74,7 +60,7 @@ function MyListPage({films}: MainPageProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <div className="catalog__films-list">
-            {filmsList}
+            <FilmsList films={films} />
           </div>
         </section>
 

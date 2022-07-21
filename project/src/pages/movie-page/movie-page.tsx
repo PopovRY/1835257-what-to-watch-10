@@ -1,10 +1,9 @@
-import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 import {Film} from '../../types/film';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import Overview from '../../components/overview/overview';
-import {useState} from 'react';
 import Logo from '../../components/logo/logo';
+import FilmsList from '../../components/film-list/films-list';
 
 type MoviePageProps = {
   films: Film[];
@@ -13,7 +12,7 @@ type MoviePageProps = {
 function MoviePage({films}: MoviePageProps): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
-  const film = films.find((filmA) => String(filmA.id) === params.id) as Film;
+  const film = films.find((filmA) => String(filmA.id) === params.id) || films[0];
 
   const onPlayButtonClickHandler = () => {
     const path = `/player/${film.id}`;
@@ -25,12 +24,6 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
     navigate(path);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [count, setActiveCard] = useState(0);
-
-  const setActive = (id: number) => {
-    setActiveCard(id);
-  };
   return (
     <>
       <section className="film-card film-card--full">
@@ -102,10 +95,7 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmCard id={film.id} previewImage={film.previewImage} name={film.name} setActiveCard={setActive} />
-            <FilmCard id={film.id} previewImage={film.previewImage} name={film.name} setActiveCard={setActive} />
-            <FilmCard id={film.id} previewImage={film.previewImage} name={film.name} setActiveCard={setActive} />
-            <FilmCard id={film.id} previewImage={film.previewImage} name={film.name} setActiveCard={setActive} />
+            <FilmsList films={films} />
           </div>
         </section>
 

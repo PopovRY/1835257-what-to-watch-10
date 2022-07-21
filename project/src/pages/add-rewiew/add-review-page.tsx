@@ -9,7 +9,7 @@ type AddReviewPageProps = {
 
 function AddReviewPage({films}: AddReviewPageProps): JSX.Element {
   const params = useParams();
-  const film = films.find((filmA) => String(filmA.id) === params.id) as Film;
+  const film = films.find((filmA) => String(filmA.id) === params.id) || films[0];
   return (
     <>
       <div className="visually-hidden">
