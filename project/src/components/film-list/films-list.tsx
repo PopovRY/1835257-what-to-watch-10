@@ -7,18 +7,23 @@ type FilmListProps = {
 }
 
 function FilmsList({ films }: FilmListProps): JSX.Element {
+  const [activeCard, setActiveCard] = useState<number | null>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedFilm, setActiveCard] = useState({});
+  const handleSetActive = (id: number) =>
+    setActiveCard(id);
 
-  const setActive = (id: number) => {
-    const activeFilm = films.filter((film) => film.id === id);
-    setActiveCard(activeFilm);
-  };
+  const handleSetNoActive = () =>
+    setActiveCard(null);
+
 
   const filmsList =
     films?.map((film) => (
-      <FilmCard key={film.id} id={film.id} previewImage={film.previewImage} name={film.name} setActiveCard={setActive} />
+      <FilmCard key={film.id}
+        film={film}
+        activeCard={activeCard}
+        onMouseEnter={handleSetActive}
+        onMouseLeave={handleSetNoActive}
+      />
     ));
 
   return (

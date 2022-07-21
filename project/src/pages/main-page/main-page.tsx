@@ -11,6 +11,7 @@ type MainPageProps = {
   films: Film[];
 }
 
+
 function MainPage({ title, genre, releaseDate, films }: MainPageProps): JSX.Element {
   const navigate = useNavigate();
 
