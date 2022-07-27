@@ -1,9 +1,9 @@
 import Footer from '../../components/footer/footer';
 import {Film} from '../../types/film';
 import {Link, useNavigate, useParams} from 'react-router-dom';
-import Overview from '../../components/overview/overview';
 import Logo from '../../components/logo/logo';
 import FilmsList from '../../components/film-list/films-list';
+import Tabs from '../../components/tabs/tabs';
 
 type MoviePageProps = {
   films: Film[];
@@ -84,7 +84,7 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Overview films={films} />
+              <Tabs films={films}/>
             </div>
           </div>
         </div>
@@ -95,7 +95,7 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmsList films={films} />
+            <FilmsList films={[...films].slice(0, 4)} />
           </div>
         </section>
 

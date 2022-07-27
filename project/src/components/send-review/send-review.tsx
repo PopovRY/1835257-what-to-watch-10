@@ -2,8 +2,8 @@ import { useState } from 'react';
 import {DEFALUT_RATING_VALUE} from '../../consts';
 
 function SendingReviewsForm(): JSX.Element {
-  const [, setComment] = useState<string>('');
-  const [, setRating] = useState<number>(DEFALUT_RATING_VALUE);
+  const [, setComment] = useState('');
+  const [, setRating] = useState(DEFALUT_RATING_VALUE);
 
   const starsButtonList = Array.from({ length: 10 }, (_, i) => {
     const key = String(10 - i);

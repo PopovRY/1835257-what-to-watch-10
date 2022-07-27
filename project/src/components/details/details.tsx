@@ -11,7 +11,7 @@ function Details({ films }: DetailsProps): JSX.Element {
   const params = useParams();
   const film = films.find((filmA) => String(filmA.id) === params.id) || films[0];
 
-  const actorsList = film.starring[0].split(',').map((star) => `${star}`, '');
+  const actorsList = film.starring[0].split(',').map((star) => `${star}`);
 
   return (
     <>

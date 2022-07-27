@@ -4,8 +4,8 @@ export const films: Film[] = [
   {
     id: 1,
     name: 'The Shawshank Redemption',
-    posterImage: 'img/bg-the-grand-budapest-hotel.jpg',
-    previewImage: 'img/bg-the-grand-budapest-hotel.jpg',
+    posterImage: 'img/bohemian-rhapsody.jpg',
+    previewImage: 'img/bohemian-rhapsody.jpg',
     backgroundImage: 'img/bg-the-grand-budapest-hotel.jpg',
     backgroundColor: 'black',
     videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
