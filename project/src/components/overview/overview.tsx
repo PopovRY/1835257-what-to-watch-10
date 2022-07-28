@@ -1,29 +1,25 @@
 import {Film} from '../../types/film';
-import {Link, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 type OverviewProps = {
   films: Film[];
 }
 
 function Overview({ films }: OverviewProps): JSX.Element {
-  const params = useParams();
-  const film = films.find((filmA) => String(filmA.id) === params.id) as Film;
+  const {id} = useParams();
+  const film = films.find((item) => item.id === Number(id));
+
+  if(!film) {
+    return (
+      <div>
+        <NotFoundPage/>
+      </div>
+    );
+  }
 
   return (
     <>
-      <nav className="film-nav film-card__nav">
-        <ul className="film-nav__list">
-          <li className="film-nav__item film-nav__item--active">
-            <Link to='#' className="film-nav__link">Overview</Link>
-          </li>
-          <li className="film-nav__item">
-            <Link to={'details'} className="film-nav__link">Details</Link>
-          </li>
-          <li className="film-nav__item">
-            <Link to={'reviews'} className="film-nav__link">Reviews</Link>
-          </li>
-        </ul>
-      </nav>
       <div className="film-rating">
         <div className="film-rating__score">{film.rating}</div>
         <p className="film-rating__meta">
