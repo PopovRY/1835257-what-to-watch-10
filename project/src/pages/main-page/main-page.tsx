@@ -5,13 +5,13 @@ import {Link, useNavigate} from 'react-router-dom';
 import IconsPlayer from '../../components/icons-player/icons-player';
 import Header from '../../components/header/header';
 
+
 type MainPageProps = {
   title: string;
   genre: string;
   releaseDate: number;
   films: Film[];
 }
-
 
 function MainPage({ title, genre, releaseDate, films }: MainPageProps): JSX.Element {
   const navigate = useNavigate();

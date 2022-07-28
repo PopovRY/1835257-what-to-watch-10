@@ -3,14 +3,24 @@ import {Link, useParams} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import SendingReviewsForm from '../../components/send-review/send-review';
 import IconsPlayer from '../../components/icons-player/icons-player';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 type AddReviewPageProps = {
-  films: Film[]
+  films: Film[];
 }
 
 function AddReviewPage({films}: AddReviewPageProps): JSX.Element {
-  const params = useParams();
-  const film = films.find((filmA) => String(filmA.id) === params.id) || films[0];
+  const {id} = useParams();
+  const film = films.find((item) => item.id === Number(id));
+
+  if(!film) {
+    return (
+      <div>
+        <NotFoundPage/>
+      </div>
+    );
+  }
+
   return (
     <>
       <IconsPlayer/>
@@ -32,7 +42,7 @@ function AddReviewPage({films}: AddReviewPageProps): JSX.Element {
                   <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
                 </li>
                 <li className="breadcrumbs__item">
-                  <Link to="#" className="breadcrumbs__link">Add review</Link>
+                  <Link to={`/films/${film.id}/review`} className="breadcrumbs__link">Add review</Link>
                 </li>
               </ul>
             </nav>
@@ -50,12 +60,12 @@ function AddReviewPage({films}: AddReviewPageProps): JSX.Element {
           </header>
 
           <div className="film-card__poster film-card__poster--small">
-            <img src={film.posterImage} alt={film.name} width="218" height="327" />
+            <img key={film.id} src={film.posterImage} alt={film.name} width="218" height="327" />
           </div>
         </div>
 
         <div className="add-review">
-          <SendingReviewsForm />
+          <SendingReviewsForm key={film.id} />
 
         </div>
 

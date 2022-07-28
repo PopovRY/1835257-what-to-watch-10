@@ -2,8 +2,9 @@ import Footer from '../../components/footer/footer';
 import {Film} from '../../types/film';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
-import FilmsList from '../../components/film-list/films-list';
+import MoreLikeFilms from '../../components/more-like-films/more-like-films';
 import Tabs from '../../components/tabs/tabs';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 type MoviePageProps = {
   films: Film[];
@@ -11,8 +12,23 @@ type MoviePageProps = {
 
 function MoviePage({films}: MoviePageProps): JSX.Element {
   const navigate = useNavigate();
-  const params = useParams();
-  const film = films.find((filmA) => String(filmA.id) === params.id) || films[0];
+  const {id} = useParams();
+  const film = films.find((item) => item.id === Number(id));
+
+  if(!film) {
+    return (
+      <div>
+        <NotFoundPage/>
+      </div>
+    );
+  }
+
+  const moreLikeFilms = films.filter((item) => {
+    if(film && film !== item) {
+      return item.genre === film.genre;
+    }
+    return false;
+  }).slice(0, 4);
 
   const onPlayButtonClickHandler = () => {
     const path = `/player/${film.id}`;
@@ -91,14 +107,7 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            <FilmsList films={[...films].slice(0, 4)} />
-          </div>
-        </section>
-
+        <MoreLikeFilms moreLikeFilms={moreLikeFilms} />
         <Footer />
       </div>
     </>

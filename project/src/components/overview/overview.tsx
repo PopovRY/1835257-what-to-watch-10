@@ -1,13 +1,22 @@
 import {Film} from '../../types/film';
 import {useParams} from 'react-router-dom';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 type OverviewProps = {
   films: Film[];
 }
 
 function Overview({ films }: OverviewProps): JSX.Element {
-  const params = useParams();
-  const film = films.find((filmA) => String(filmA.id) === params.id ) as Film;
+  const {id} = useParams();
+  const film = films.find((item) => item.id === Number(id));
+
+  if(!film) {
+    return (
+      <div>
+        <NotFoundPage/>
+      </div>
+    );
+  }
 
   return (
     <>
