@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import {DEFALUT_RATING_VALUE} from '../../consts';
 
@@ -9,10 +10,21 @@ function SendingReviewsForm(): JSX.Element {
     const key = String(10 - i);
 
     return (
-      <>
-        <input className="rating__input" id={`star-${key}`} type="radio" name="rating" value={`${key}`} onChange={(evt) => setRating(Number(evt.currentTarget.value))} />
-        <label className="rating__label" htmlFor={`star-${key}`}>{`Rating ${key}`}</label>
-      </>);
+      <React.Fragment key={`${i}`}>
+        <input
+          className="rating__input"
+          id={`star-${key}`}
+          type="radio"
+          name="rating"
+          value={`${key}`}
+          onChange={(evt) => setRating(Number(evt.currentTarget.value))}
+        />
+        <label
+          className="rating__label"
+          htmlFor={`star-${key}`}
+        >{`Rating ${key}`}
+        </label>
+      </React.Fragment>);
   });
 
   return (

@@ -107,7 +107,7 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <MoreLikeFilms moreLikeFilms={moreLikeFilms} />
+        <MoreLikeFilms similarFilms={moreLikeFilms} />
         <Footer />
       </div>
     </>
