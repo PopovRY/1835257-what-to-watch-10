@@ -1,19 +1,17 @@
 import Footer from '../../components/footer/footer';
 import {Film} from '../../types/film';
 import FilmsList from '../../components/film-list/films-list';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import IconsPlayer from '../../components/icons-player/icons-player';
 import Header from '../../components/header/header';
+import GenresList from '../../components/genres-list/genres-list';
 
 
 type MainPageProps = {
-  title: string;
-  genre: string;
-  releaseDate: number;
   films: Film[];
 }
 
-function MainPage({ title, genre, releaseDate, films }: MainPageProps): JSX.Element {
+function MainPage({ films }: MainPageProps): JSX.Element {
   const navigate = useNavigate();
 
   const myListButtonClickHandler = () => {
@@ -42,14 +40,14 @@ function MainPage({ title, genre, releaseDate, films }: MainPageProps): JSX.Elem
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={films[0].posterImage} alt={`${films[0].name }poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{films[0].name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{releaseDate}</span>
+                <span className="film-card__genre">{films[0].genre}</span>
+                <span className="film-card__year">{films[0].released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -76,38 +74,7 @@ function MainPage({ title, genre, releaseDate, films }: MainPageProps): JSX.Elem
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <Link to="#" className="catalog__genres-link">All genres</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Comedies</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Crime</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Documentary</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Dramas</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Horror</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Kids & Family</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Romance</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Sci-Fi</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Thrillers</Link>
-            </li>
-          </ul>
+          <GenresList />
 
           <div className="catalog__films-list">
             <FilmsList films={films} />

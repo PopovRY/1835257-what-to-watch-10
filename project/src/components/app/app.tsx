@@ -8,24 +8,19 @@ import PlayerPage from '../../pages/player/player-page';
 import AddReviewPage from '../../pages/add-rewiew/add-review-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import MoviePage from '../../pages/movie-page/movie-page';
-import {Film} from '../../types/film';
+
+import {useAppSelector} from '../../hooks';
 
 
-type MainPageProps = {
-  title: string;
-  genre: string;
-  releaseDate: number;
-  films: Film[];
-
-}
-
-function App({title, genre, releaseDate, films}: MainPageProps): JSX.Element {
+function App(): JSX.Element {
+  const films = useAppSelector((state) => state.films);
+  const filteredFilms = useAppSelector((state) => state.filteredFilms);
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element ={<MainPage title={title} genre={genre} releaseDate={releaseDate} films={films} />}
+          element ={<MainPage films={filteredFilms} />}
         />
         <Route
           path={AppRoute.SignIn}

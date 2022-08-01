@@ -12,9 +12,7 @@ function Overview({ films }: OverviewProps): JSX.Element {
 
   if(!film) {
     return (
-      <div>
-        <NotFoundPage/>
-      </div>
+      <NotFoundPage/>
     );
   }
 

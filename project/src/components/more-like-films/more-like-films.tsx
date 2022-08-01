@@ -3,10 +3,10 @@ import FilmCard from '../film-card/film-card';
 import {useState} from 'react';
 
 type Props = {
-  moreLikeFilms: Film[];
+  similarFilms: Film[];
 }
 
-function MoreLikeFilms({moreLikeFilms}: Props) {
+function MoreLikeFilms({similarFilms}: Props) {
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
   const handleSetActive = (id: number) =>
@@ -18,7 +18,7 @@ function MoreLikeFilms({moreLikeFilms}: Props) {
     <section className="catalog catalog--like-this">
       <h2 className="catalog__title">More like this</h2>
       <div className="catalog__films-list">
-        {moreLikeFilms.map((item) => (
+        {similarFilms.map((item) => (
           <FilmCard key={item.id} film={item} activeCard={activeCard} onMouseLeave={handleSetNoActive} onMouseEnter={handleSetActive}/>
         ))}
       </div>
