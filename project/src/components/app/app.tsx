@@ -14,13 +14,12 @@ import {useAppSelector} from '../../hooks';
 
 function App(): JSX.Element {
   const films = useAppSelector((state) => state.films);
-  const filteredFilms = useAppSelector((state) => state.filteredFilms);
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element ={<MainPage films={filteredFilms} />}
+          element ={<MainPage films={films} />}
         />
         <Route
           path={AppRoute.SignIn}

@@ -1,10 +1,15 @@
 import Footer from '../../components/footer/footer';
 import {Film} from '../../types/film';
 import FilmsList from '../../components/film-list/films-list';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import IconsPlayer from '../../components/icons-player/icons-player';
 import Header from '../../components/header/header';
 import GenresList from '../../components/genres-list/genres-list';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useEffect} from 'react';
+import {resetShowMoreCount} from '../../store/action';
+import {SHOW_MORE_BEGIN_COUNT, SHOW_MORE_NEXT_COUNT} from '../../consts';
 
 
 type MainPageProps = {
@@ -12,6 +17,23 @@ type MainPageProps = {
 }
 
 function MainPage({ films }: MainPageProps): JSX.Element {
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(resetShowMoreCount());
+  }, [location, dispatch]);
+
+  const filteredFilms = useAppSelector((state) => state.filteredFilms);
+  const showingFilmCount = useAppSelector((state) => state.showingFilmCount);
+  const showMoreFilms = useAppSelector((state) => state.filteredFilms).slice(SHOW_MORE_BEGIN_COUNT, showingFilmCount + SHOW_MORE_NEXT_COUNT);
+
+  const isShowMoreComponent = () => {
+    if(filteredFilms.length < SHOW_MORE_NEXT_COUNT) {return true;}
+    if(showMoreFilms.length < showingFilmCount + SHOW_MORE_NEXT_COUNT) {return true;}
+    return false;
+  };
+
   const navigate = useNavigate();
 
   const myListButtonClickHandler = () => {
@@ -77,12 +99,10 @@ function MainPage({ films }: MainPageProps): JSX.Element {
           <GenresList />
 
           <div className="catalog__films-list">
-            <FilmsList films={films} />
+            <FilmsList films={showMoreFilms} />
           </div>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {isShowMoreComponent() || <ShowMoreButton />}
         </section>
 
         <Footer />

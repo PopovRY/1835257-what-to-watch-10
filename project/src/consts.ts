@@ -21,17 +21,6 @@ export enum TabNames {
   Reviews = 'Reviews',
 }
 
-export const Genre = {
-  All: 'All genres',
-  Comedies: 'Comedies',
-  Crime: 'Crime',
-  Documentary: 'Documentary',
-  Dramas: 'Dramas',
-  Horror: 'Horror',
-  KidsAndFamily: 'Kids & Family',
-  Romance: 'Romance',
-  SciFi: 'Sci-Fi',
-  Thrillers: 'Thrillers',
-};
-
-export const GENRES = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
+export const DEFAULT_GENRE = 'All genres';
+export const SHOW_MORE_NEXT_COUNT = 8;
+export const SHOW_MORE_BEGIN_COUNT = 0;
