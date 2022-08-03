@@ -1,14 +1,14 @@
 import {films} from '../mocks/films';
 import {createReducer} from '@reduxjs/toolkit';
-import {changeGenre, incrementShowMoreCount, resetShowMoreCount} from './action';
-import {DEFAULT_GENRE, SHOW_MORE_BEGIN_COUNT, SHOW_MORE_NEXT_COUNT} from '../consts';
-
+import {changeGenre, incrementShowMoreCount, loadFilms, requireAuthorization, resetShowMoreCount} from './action';
+import {AuthorizationStatus, DEFAULT_GENRE, SHOW_MORE_BEGIN_COUNT, SHOW_MORE_NEXT_COUNT} from '../consts';
 
 const initialState = {
   genre: DEFAULT_GENRE,
   filteredFilms: films,
   showingFilmCount: SHOW_MORE_BEGIN_COUNT,
-  films: films
+  films: films,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -27,6 +27,11 @@ const reducer = createReducer(initialState, (builder) => {
       state.showingFilmCount = state.showingFilmCount + SHOW_MORE_NEXT_COUNT;
     }).addCase(resetShowMoreCount, (state, action) => {
       state.showingFilmCount = SHOW_MORE_BEGIN_COUNT;
+    }).addCase(loadFilms, (state, action) => {
+      state.films = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 
