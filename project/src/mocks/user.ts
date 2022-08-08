@@ -1,7 +1,7 @@
-import {User} from '../types/user';
+import {UserData} from '../types/user-data';
 
 
-const user: User = {
+const user: UserData = {
   'avatarUrl': 'img/1.png',
   'email': 'Oliver.conner@gmail.com',
   'id': 1,

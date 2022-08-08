@@ -1,5 +1,4 @@
 import Footer from '../../components/footer/footer';
-import {Film} from '../../types/film';
 import FilmsList from '../../components/film-list/films-list';
 import {useLocation, useNavigate} from 'react-router-dom';
 import IconsPlayer from '../../components/icons-player/icons-player';
@@ -10,29 +9,15 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
 import {resetShowMoreCount} from '../../store/action';
 import {SHOW_MORE_BEGIN_COUNT, SHOW_MORE_NEXT_COUNT} from '../../consts';
+import PreLoader from '../../components/pre-loader/pre-loader';
 
-
-type MainPageProps = {
-  films: Film[];
-}
-
-function MainPage({ films }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(resetShowMoreCount());
   }, [location, dispatch]);
-
-  const filteredFilms = useAppSelector((state) => state.filteredFilms);
-  const showingFilmCount = useAppSelector((state) => state.showingFilmCount);
-  const showMoreFilms = useAppSelector((state) => state.filteredFilms).slice(SHOW_MORE_BEGIN_COUNT, showingFilmCount + SHOW_MORE_NEXT_COUNT);
-
-  const isShowMoreComponent = () => {
-    if(filteredFilms.length < SHOW_MORE_NEXT_COUNT) {return true;}
-    if(showMoreFilms.length < showingFilmCount + SHOW_MORE_NEXT_COUNT) {return true;}
-    return false;
-  };
 
   const navigate = useNavigate();
 
@@ -45,6 +30,20 @@ function MainPage({ films }: MainPageProps): JSX.Element {
     const path = '/player/1';
     navigate(path);
   };
+
+  const films = useAppSelector((state) => state.films);
+
+  const filteredFilms = useAppSelector((state) => state.filteredFilms);
+  const showingFilmCount = useAppSelector((state) => state.showingFilmCount);
+  const showMoreFilms = useAppSelector((state) => state.filteredFilms).slice(SHOW_MORE_BEGIN_COUNT, showingFilmCount + SHOW_MORE_NEXT_COUNT);
+
+  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+  if (isDataLoaded) {
+    return (
+      <PreLoader />
+    );
+  }
+  const renderShowMoreButton = filteredFilms.length <= SHOW_MORE_NEXT_COUNT || filteredFilms.length <= showingFilmCount + SHOW_MORE_NEXT_COUNT;
 
   return (
     <>
@@ -102,7 +101,7 @@ function MainPage({ films }: MainPageProps): JSX.Element {
             <FilmsList films={showMoreFilms} />
           </div>
 
-          {isShowMoreComponent() || <ShowMoreButton />}
+          {renderShowMoreButton || <ShowMoreButton />}
         </section>
 
         <Footer />
