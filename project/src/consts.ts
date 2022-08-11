@@ -23,7 +23,7 @@ export enum TabNames {
 
 export const DEFAULT_GENRE = 'All genres';
 export const SHOW_MORE_NEXT_COUNT = 8;
-export const SHOW_MORE_BEGIN_COUNT = 0;
+export const SHOW_MORE_BEGIN_COUNT = 8;
 export const TIMEOUT_SHOW_ERROR = 5000;
 
 export enum APIRoute {

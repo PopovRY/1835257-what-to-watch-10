@@ -1,6 +1,6 @@
 import MainPage from '../../pages/main-page/main-page';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute} from '../../consts';
+import {AppRoute, AuthorizationStatus} from '../../consts';
 import LoginPage from '../../pages/login/login-page';
 import MyListPage from '../../pages/my-list-page/my-list-page';
 import PrivateRoute from '../private-route/private-route';
@@ -9,10 +9,21 @@ import AddReviewPage from '../../pages/add-rewiew/add-review-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import MoviePage from '../../pages/movie-page/movie-page';
 import {useAppSelector} from '../../hooks';
+import PreLoader from '../pre-loader/pre-loader';
 
+const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
 
 function App(): JSX.Element {
   const films = useAppSelector((state) => state.films);
+
+  const { isDataLoaded, authorizationStatus } = useAppSelector((state) => state);
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+    return (
+      <PreLoader />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -27,8 +38,8 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.MyList}
           element ={
-            <PrivateRoute>
-              <MyListPage films={films}/>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <MyListPage/>
             </PrivateRoute>
           }
         />
@@ -39,7 +50,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.AddReview}
           element ={
-            <PrivateRoute>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <AddReviewPage films={films}/>
             </PrivateRoute>
           }

@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import Logo from '../../components/logo/logo';
+import Header from '../../components/header/header';
 
 function NotFoundPage(): JSX.Element {
   return (
@@ -40,13 +40,7 @@ function NotFoundPage(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
-          <Logo />
-
-          <div className="user-block">
-            <a href="sign-in.html" className="user-block__link">Sign in</a>
-          </div>
-        </header>
+        <Header />
 
       </section>
       <div>
