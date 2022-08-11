@@ -2,11 +2,9 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {
   changeGenre,
-  incrementShowMoreCount,
   loadFilms,
   requireAuthorization,
-  resetShowMoreCount,
-  setDataLoadedStatus, setError
+  setDataLoadedStatus, setError, showMore
 } from './action';
 import {AuthorizationStatus, DEFAULT_GENRE, SHOW_MORE_BEGIN_COUNT, SHOW_MORE_NEXT_COUNT} from '../consts';
 import {Film} from '../types/film';
@@ -26,7 +24,7 @@ const initialState: InitalState = {
   filteredFilms: [],
   showingFilmCount: SHOW_MORE_BEGIN_COUNT,
   films: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
+  authorizationStatus: AuthorizationStatus.Auth,
   isDataLoaded: false,
   error: null
 };
@@ -34,22 +32,12 @@ const initialState: InitalState = {
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeGenre, (state, action) => {
-      const genre = action.payload;
-      if(action.payload) {
-        state.genre = genre;
-        if(genre !== DEFAULT_GENRE) {
-          state.filteredFilms = state.films.filter((item) => item.genre === genre);
-        }else {
-          state.filteredFilms = state.films;
-        }
-      }
-    }).addCase(incrementShowMoreCount, (state) => {
-      state.showingFilmCount = state.showingFilmCount + SHOW_MORE_NEXT_COUNT;
-    }).addCase(resetShowMoreCount, (state, action) => {
-      state.showingFilmCount = SHOW_MORE_BEGIN_COUNT;
+      state.genre = action.payload;
+      state.showingFilmCount = SHOW_MORE_NEXT_COUNT;
+    }).addCase(showMore, (state, action) => {
+      state.showingFilmCount = action.payload;
     }).addCase(loadFilms, (state, action) => {
       state.films = action.payload;
-      state.filteredFilms = action.payload;
     }).addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     }).addCase(setDataLoadedStatus, (state, action) => {

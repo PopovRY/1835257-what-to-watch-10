@@ -1,16 +1,14 @@
-import {useAppDispatch} from '../../hooks';
-import {incrementShowMoreCount} from '../../store/action';
+type ShowMoreButtonProps = {
+  onClick: VoidFunction
+}
 
-function ShowMoreButton() {
-  const dispatch = useAppDispatch();
-  const handleButtonClick = () => {
-    dispatch(incrementShowMoreCount());
-  };
+function ShowMoreButton({ onClick }: ShowMoreButtonProps): JSX.Element {
   return (
     <div className="catalog__more">
-      <button onClick={handleButtonClick} className="catalog__button" type="button">Show more</button>
+      <button className="catalog__button" type="button" onClick={onClick}>Show more</button>
     </div>
   );
+
 }
 
 export default ShowMoreButton;

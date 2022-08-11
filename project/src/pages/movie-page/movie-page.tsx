@@ -1,10 +1,10 @@
 import Footer from '../../components/footer/footer';
 import {Film} from '../../types/film';
 import {Link, useNavigate, useParams} from 'react-router-dom';
-import Logo from '../../components/logo/logo';
 import MoreLikeFilms from '../../components/more-like-films/more-like-films';
 import Tabs from '../../components/tabs/tabs';
 import NotFoundPage from '../not-found-page/not-found-page';
+import Header from '../../components/header/header';
 
 type MoviePageProps = {
   films: Film[];
@@ -50,20 +50,7 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <header className="page-header film-card__head">
-            <Logo />
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a href="#section" className="user-block__link">Sign out</a>
-              </li>
-            </ul>
-          </header>
+          <Header />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">

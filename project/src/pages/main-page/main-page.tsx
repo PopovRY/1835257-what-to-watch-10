@@ -4,7 +4,6 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import IconsPlayer from '../../components/icons-player/icons-player';
 import Header from '../../components/header/header';
 import GenresList from '../../components/genres-list/genres-list';
-import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
 import {resetShowMoreCount} from '../../store/action';
@@ -32,8 +31,6 @@ function MainPage(): JSX.Element {
   };
 
   const films = useAppSelector((state) => state.films);
-
-  const filteredFilms = useAppSelector((state) => state.filteredFilms);
   const showingFilmCount = useAppSelector((state) => state.showingFilmCount);
   const showMoreFilms = useAppSelector((state) => state.filteredFilms).slice(SHOW_MORE_BEGIN_COUNT, showingFilmCount + SHOW_MORE_NEXT_COUNT);
 
@@ -43,7 +40,6 @@ function MainPage(): JSX.Element {
       <PreLoader />
     );
   }
-  const renderShowMoreButton = filteredFilms.length <= SHOW_MORE_NEXT_COUNT || filteredFilms.length <= showingFilmCount + SHOW_MORE_NEXT_COUNT;
 
   return (
     <>
@@ -101,7 +97,6 @@ function MainPage(): JSX.Element {
             <FilmsList films={showMoreFilms} />
           </div>
 
-          {renderShowMoreButton || <ShowMoreButton />}
         </section>
 
         <Footer />
