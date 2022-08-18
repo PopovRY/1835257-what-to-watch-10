@@ -1,34 +1,31 @@
 import Footer from '../../components/footer/footer';
-import {Film} from '../../types/film';
-import {Link, useNavigate, useParams} from 'react-router-dom';
-import MoreLikeFilms from '../../components/more-like-films/more-like-films';
+import {useNavigate, useParams} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../../components/header/header';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import SimilarFilms from '../../components/similar-films/similar-films';
+import {AuthorizationStatus} from '../../consts';
+import {fetchFilm, fetchFilmComments, fetchSimilarFilms} from '../../store/api-action';
+import {useEffect} from 'react';
+import AddReviewButton from '../../components/review-btn/review-btn';
+import {films} from '../../mocks/films';
 
-type MoviePageProps = {
-  films: Film[];
-}
-
-function MoviePage({films}: MoviePageProps): JSX.Element {
+function MoviePage(): JSX.Element {
   const navigate = useNavigate();
-  const {id} = useParams();
-  const film = films.find((item) => item.id === Number(id));
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const film = useAppSelector((state) => state.film);
+  const similarFilms = useAppSelector((state) => state.similarFilms);
+  const favoriteFilmsLength = useAppSelector((state) => state.films).filter((filmA) => filmA.isFavorite).length;
 
-  if(!film) {
-    return (
-      <div>
-        <NotFoundPage/>
-      </div>
-    );
-  }
 
-  const moreLikeFilms = films.filter((item) => {
-    if(film && film !== item) {
-      return item.genre === film.genre;
-    }
-    return false;
-  }).slice(0, 4);
+  useEffect(() => {
+    dispatch(fetchFilm(params.id));
+    dispatch(fetchSimilarFilms(params.id));
+    dispatch(fetchFilmComments(params.id));
+  }, [dispatch, params.id]);
 
   const onPlayButtonClickHandler = () => {
     const path = `/player/${film.id}`;
@@ -40,9 +37,17 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
     navigate(path);
   };
 
+  const bckgColor = {
+    backgroundColor: `${film?.backgroundColor}`
+  };
+
+  if (!film.name) {
+    return <NotFoundPage />;
+  }
+
   return (
     <>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={bckgColor}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={film.backgroundImage} alt={film.name} />
@@ -72,9 +77,9 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{films.length}</span>
+                  <span className="film-card__count">{favoriteFilmsLength}</span>
                 </button>
-                <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
+                {authStatus === AuthorizationStatus.Auth ? <AddReviewButton id={film.id} /> : null}
               </div>
             </div>
           </div>
@@ -94,7 +99,7 @@ function MoviePage({films}: MoviePageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <MoreLikeFilms similarFilms={moreLikeFilms} />
+        <SimilarFilms similarFilms={similarFilms} />
         <Footer />
       </div>
     </>

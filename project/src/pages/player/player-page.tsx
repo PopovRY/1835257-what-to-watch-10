@@ -1,26 +1,27 @@
-import {Film} from '../../types/film';
 import {useNavigate, useParams} from 'react-router-dom';
 import NotFoundPage from '../not-found-page/not-found-page';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useEffect} from 'react';
+import {fetchFilm} from '../../store/api-action';
 
-type PlayerPageProps = {
-  films: Film[];
-}
-
-function PlayerPage({films}:PlayerPageProps): JSX.Element {
+function PlayerPage(): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
-  const film = films.find((filmA) => String(filmA.id) === params.id);
+  const film = useAppSelector((state) => state.film);
+  const dispatch = useAppDispatch();
 
-  if(!film) {
-    return (
-      <NotFoundPage/>
-    );
-  }
+  useEffect(() => {
+    dispatch(fetchFilm(params.id));
+  }, [dispatch, params.id]);
 
   const onExitButtonClickHandler = () => {
     const path = `/films/${film?.id}`;
     navigate(path);
   };
+
+  if(!film.name) {
+    return <NotFoundPage/>;
+  }
 
   return (
     <div className="player">

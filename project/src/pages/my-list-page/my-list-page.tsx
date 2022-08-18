@@ -1,13 +1,19 @@
 import Footer from '../../components/footer/footer';
-import FilmsList from '../../components/film-list/films-list';
 import Header from '../../components/header/header';
 import {useAppSelector} from '../../hooks';
+import FilmCard from '../../components/film-card/film-card';
 
 
 function MyListPage(): JSX.Element {
   const favoriteFilmsLength = useAppSelector((state) => state.films).filter((filmA) => filmA.isFavorite).length;
   const films = useAppSelector((state) => state.films).filter((film) => film.isFavorite);
 
+  const filmsList =
+    films?.map((film) => (
+      <FilmCard key={film.id}
+        film={film}
+      />
+    ));
   return (
 
 
@@ -21,7 +27,7 @@ function MyListPage(): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <FilmsList films={films} />
+          {filmsList}
         </div>
       </section>
 

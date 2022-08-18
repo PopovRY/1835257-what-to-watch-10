@@ -1,5 +1,4 @@
 import {Film} from '../../types/film';
-import {useState} from 'react';
 import FilmCard from '../film-card/film-card';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {SHOW_MORE_NEXT_COUNT} from '../../consts';
@@ -22,22 +21,10 @@ function FilmsList({ films }: FilmListProps): JSX.Element {
 
   const isShowBtn = showingFilmCount < sortedFilms.length;
 
-  const [activeCard, setActiveCard] = useState<number | null>(null);
-
-  const handleSetActive = (id: number) =>
-    setActiveCard(id);
-
-  const handleSetNoActive = () =>
-    setActiveCard(null);
-
-
   const filmsList =
-    sortedFilms?.slice(0, showingFilmCount).map((film, index) => (
+    sortedFilms?.slice(0, showingFilmCount).map((film) => (
       <FilmCard key={film.id}
         film={film}
-        activeCard={activeCard}
-        onMouseEnter={handleSetActive}
-        onMouseLeave={handleSetNoActive}
       />
     ));
 

@@ -3,6 +3,7 @@ import Overview from '../overview/overview';
 import Details from '../details/details';
 import Reviews from '../reviews/reviews';
 import {Film} from '../../types/film';
+import {useAppSelector} from '../../hooks';
 
 
 type TabsProps = {
@@ -10,6 +11,7 @@ type TabsProps = {
 }
 
 function Tabs({films}:TabsProps): JSX.Element {
+  const filmComments = useAppSelector((state) => state.filmComments);
   const [activeTab, setActiveTab] = useState('Overview');
   const onTabClickHandler = (evt: React.MouseEvent) => {
     evt.preventDefault();
@@ -25,7 +27,7 @@ function Tabs({films}:TabsProps): JSX.Element {
       case 'Details':
         return <Details films={films} />;
       case 'Reviews':
-        return <Reviews />;
+        return <Reviews reviews={filmComments}/>;
     }
   };
   return (
