@@ -15,7 +15,6 @@ const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function App(): JSX.Element {
-  const films = useAppSelector((state) => state.films);
 
   const { isDataLoaded, authorizationStatus } = useAppSelector((state) => state);
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
@@ -57,7 +56,7 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Player}
-          element ={<PlayerPage films={films}/>}
+          element ={<PlayerPage />}
         />
         <Route
           path={AppRoute.NotFound}
