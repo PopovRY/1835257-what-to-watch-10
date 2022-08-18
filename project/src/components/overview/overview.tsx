@@ -1,6 +1,7 @@
 import {Film} from '../../types/film';
 import {useParams} from 'react-router-dom';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import getTextRating from '../../utils';
 
 type OverviewProps = {
   films: Film[];
@@ -21,7 +22,7 @@ function Overview({ films }: OverviewProps): JSX.Element {
       <div className="film-rating">
         <div className="film-rating__score">{film.rating}</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">Very good</span>
+          <span className="film-rating__level">{getTextRating(film.rating)}</span>
           <span className="film-rating__count">{film.scoresCount} ratings</span>
         </p>
       </div>

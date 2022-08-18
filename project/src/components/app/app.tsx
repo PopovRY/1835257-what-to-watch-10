@@ -45,13 +45,13 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Film}
-          element ={<MoviePage films={films} />}
+          element ={<MoviePage/>}
         />
         <Route
           path={AppRoute.AddReview}
           element ={
             <PrivateRoute authorizationStatus={authorizationStatus}>
-              <AddReviewPage films={films}/>
+              <AddReviewPage/>
             </PrivateRoute>
           }
         />

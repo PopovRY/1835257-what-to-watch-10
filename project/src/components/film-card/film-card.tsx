@@ -1,28 +1,27 @@
 import {Link} from 'react-router-dom';
 import {Film} from '../../types/film';
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 const PLAY_TIMEOUT = 1000;
 
 type FilmCardProps = {
   film: Film;
-  activeCard: number | null;
-  onMouseEnter: (id: number) => void;
-  onMouseLeave: () => void;
 }
 
-export function FilmCard({film, activeCard, onMouseEnter, onMouseLeave}: FilmCardProps): JSX.Element {
+export function FilmCard({film}: FilmCardProps): JSX.Element {
 
   const { id, previewImage, previewVideoLink, name } = film;
+
+  const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (activeCard === id) {
+      if (isPlaying) {
         videoRef.current?.play();
       }
     }, PLAY_TIMEOUT);
-    if (activeCard !== id) {
+    if (!isPlaying) {
       videoRef.current?.pause();
       videoRef.current?.load();
     }
@@ -30,12 +29,15 @@ export function FilmCard({film, activeCard, onMouseEnter, onMouseLeave}: FilmCar
     return () => {
       clearTimeout(timer);
     };
-  }, [activeCard, id]);
+  }, [isPlaying]);
 
 
   return (
-    <article className="small-film-card catalog__films-card" onMouseEnter={() => onMouseEnter(id)}
-      onMouseLeave={onMouseLeave}
+    <article className={'small-film-card catalog__films-card'} onMouseOver={() => {
+      setIsPlaying(true);
+    }} onMouseOut={() => {
+      setIsPlaying(false);
+    }}
     >
       <div className="small-film-card__image">
         <video

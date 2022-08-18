@@ -2,6 +2,7 @@ export enum AppRoute {
   Main = '/',
   SignIn = '/login',
   MyList = '/mylist',
+  Films = '/films/',
   Film = '/films/:id',
   AddReview = '/films/:id/review',
   Player = '/player/:id',
@@ -28,6 +29,27 @@ export const TIMEOUT_SHOW_ERROR = 5000;
 
 export enum APIRoute {
   Films = '/films',
+  Promo = '/promo',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
+  AddReview = '/films/:id/*',
+}
+
+export const MAX_SIMILAR_FILMS_COUNT = 4;
+
+export const enum Rating {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome',
+}
+
+export const enum RatePoints {
+  Bad = 0,
+  LowNormal = 3,
+  LowGood = 5,
+  HighGood = 8,
+  Awesome = 10,
 }
