@@ -1,32 +1,35 @@
-import {Film} from '../../types/film';
+import {Films} from '../../types/films';
 import FilmCard from '../film-card/film-card';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {SHOW_MORE_NEXT_COUNT} from '../../consts';
 import {showMore} from '../../store/action';
 import ShowMoreButton from '../show-more-button/show-more-button';
+import {selectGenre, selectRenderedFilmCount} from '../../store/films-process/selectors';
+import {useMemo} from 'react';
+
 
 type FilmListProps = {
-  films: Film[];
+  films: Films[];
 }
 
 function FilmsList({ films }: FilmListProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const selectedGenre = useAppSelector((state) => state.genre);
-  const showingFilmCount = useAppSelector((state) => state.showingFilmCount);
+  const selectedGenre = useAppSelector(selectGenre);
+  const renderedFilmCount = useAppSelector(selectRenderedFilmCount);
   const sortedFilms = films.filter((film) => selectedGenre === 'All genres' ? films : film.genre === selectedGenre);
 
   const onShowMoreBtnClick = () => {
-    dispatch(showMore(showingFilmCount + SHOW_MORE_NEXT_COUNT));
+    dispatch(showMore(renderedFilmCount + SHOW_MORE_NEXT_COUNT));
   };
 
-  const isShowBtn = showingFilmCount < sortedFilms.length;
+  const isShowBtn = renderedFilmCount < sortedFilms.length;
 
-  const filmsList =
-    sortedFilms?.slice(0, showingFilmCount).map((film) => (
+  const filmsList = useMemo(() =>
+    sortedFilms?.slice(0, renderedFilmCount).map((film) => (
       <FilmCard key={film.id}
         film={film}
       />
-    ));
+    )), [renderedFilmCount, sortedFilms]);
 
   return (
     <>

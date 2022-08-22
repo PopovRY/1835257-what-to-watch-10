@@ -1,29 +1,32 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeGenre, resetShowMoreCount} from '../../store/action';
-import {DEFAULT_GENRE} from '../../consts';
+import {changeGenre} from '../../store/action';
+import {selectFilmGenres, selectGenre} from '../../store/films-process/selectors';
+import React from 'react';
+import {MAX_GENRES_COUNT} from '../../consts';
+import GenreButton from '../genre-button/genre-button';
 
 function GenresList(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const films = useAppSelector((state) => state.films);
-  const genre = useAppSelector((state) => state.genre);
-  const genres = new Set([DEFAULT_GENRE]);
-  films.map((item) => genres.add(item.genre));
-  const filteredGenres = [...genres];
+  const selectedGenre = useAppSelector(selectGenre);
+  const genres = useAppSelector(selectFilmGenres);
 
-  const handleGenreClick = (item: string) => {
-    dispatch(changeGenre(item));
-    dispatch(resetShowMoreCount());
+  const dispatch = useAppDispatch();
+
+  const onTabClickHandler = (evt: React.MouseEvent) => {
+    const clickedGenre = evt.currentTarget.textContent;
+    if (clickedGenre !== null) {
+      dispatch(changeGenre(clickedGenre));
+    }
   };
+
+
+  const generateGenreTab =
+    genres.map((genre) => (
+      <GenreButton key={genre} genre={genre} isActive={selectedGenre === genre} onClick={onTabClickHandler} />
+    )).slice(0, MAX_GENRES_COUNT);
 
   return (
     <ul className="catalog__genres-list">
-      {filteredGenres.map((item) => (
-        <li key={item} onClick={() => handleGenreClick(item)}
-          className={item === genre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'} style={{cursor:'pointer'}}
-        >
-          <span className="catalog__genres-link">{item}</span>
-        </li>
-      ))}
+      {generateGenreTab}
     </ul>
   );
 }

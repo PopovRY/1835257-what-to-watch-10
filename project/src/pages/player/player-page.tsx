@@ -3,11 +3,12 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
 import {fetchFilm} from '../../store/api-action';
+import {selectFilm} from '../../store/film-process/selectors';
 
 function PlayerPage(): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(selectFilm);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

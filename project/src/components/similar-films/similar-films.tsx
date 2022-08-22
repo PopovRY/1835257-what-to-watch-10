@@ -1,9 +1,9 @@
-import {Film} from '../../types/film';
+import {Films} from '../../types/films';
 
 import FilmsList from '../film-list/films-list';
 
 type SimilarFilmsProps = {
-  similarFilms: Film[];
+  similarFilms: Films[];
 }
 
 function SimilarFilms({similarFilms}: SimilarFilmsProps) {

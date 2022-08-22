@@ -1,52 +1,42 @@
-import React, {useState} from 'react';
-import Overview from '../overview/overview';
-import Details from '../details/details';
-import Reviews from '../reviews/reviews';
-import {Film} from '../../types/film';
-import {useAppSelector} from '../../hooks';
+import {getTab} from '../../utils';
+import classNames from 'classnames';
+import {Tab} from '../../consts';
+import {Link} from 'react-router-dom';
 
 
-type TabsProps = {
-  films: Film[]
-}
+function Tabs(): JSX.Element {
+  const tab = getTab();
 
-function Tabs({films}:TabsProps): JSX.Element {
-  const filmComments = useAppSelector((state) => state.filmComments);
-  const [activeTab, setActiveTab] = useState('Overview');
-  const onTabClickHandler = (evt: React.MouseEvent) => {
-    evt.preventDefault();
-    if (evt.currentTarget.textContent !== null) {
-      setActiveTab(evt.currentTarget.textContent);
-    }
-  };
-
-  const renderFilmData = (tab: string) => {
-    switch(tab) {
-      case 'Overview':
-        return <Overview films={films} />;
-      case 'Details':
-        return <Details films={films} />;
-      case 'Reviews':
-        return <Reviews reviews={filmComments}/>;
-    }
-  };
   return (
-    <>
-      <nav className="film-nav film-card__nav">
-        <ul className="film-nav__list">
-          <li className={activeTab === 'Overview' ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
-            <a href="/" className="film-nav__link" onClick={onTabClickHandler}>Overview</a>
-          </li>
-          <li className={activeTab === 'Details' ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
-            <a href="/" className="film-nav__link" onClick={onTabClickHandler}>Details</a>
-          </li>
-          <li className={activeTab === 'Reviews' ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
-            <a href="/" className="film-nav__link" onClick={onTabClickHandler}>Reviews</a>
-          </li>
-        </ul>
-      </nav>
-      {renderFilmData(activeTab)}
-    </>
+    <nav className="film-nav film-card__nav">
+      <ul className="film-nav__list">
+        <li className={classNames('film-nav__item', {
+          'film-nav__item--active':
+              tab === Tab.Overview
+        }
+        )}
+        >
+          <Link to={`?tab=${Tab.Overview}`} className="film-nav__link">Overview</Link>
+        </li>
+        <li className={classNames('film-nav__item', {
+          'film-nav__item--active':
+              tab === Tab.Details
+        }
+        )}
+        >
+          <Link to={`?tab=${Tab.Details}`} className="film-nav__link">Details</Link>
+        </li>
+        <li className={classNames('film-nav__item', {
+          'film-nav__item--active':
+              tab === Tab.Reviews
+        }
+        )}
+        >
+          <Link to={`?tab=${Tab.Reviews}`} className="film-nav__link">Reviews</Link>
+        </li>
+      </ul>
+    </nav>
+
   );
 }
 

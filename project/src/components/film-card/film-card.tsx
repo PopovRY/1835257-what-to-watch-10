@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
-import {Film} from '../../types/film';
+import {Films} from '../../types/films';
 import {useEffect, useRef, useState} from 'react';
 
 const PLAY_TIMEOUT = 1000;
 
 type FilmCardProps = {
-  film: Film;
+  film: Films;
 }
 
 export function FilmCard({film}: FilmCardProps): JSX.Element {

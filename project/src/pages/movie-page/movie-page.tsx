@@ -9,16 +9,18 @@ import {AuthorizationStatus} from '../../consts';
 import {fetchFilm, fetchFilmComments, fetchSimilarFilms} from '../../store/api-action';
 import {useEffect} from 'react';
 import AddReviewButton from '../../components/review-btn/review-btn';
-import {films} from '../../mocks/films';
+import {selectAuth} from '../../store/user-process/selectors';
+import {selectFilm, selectSimilarFilms} from '../../store/film-process/selectors';
+import {selectFavoriteFilms} from '../../store/films-process/selectors';
 
 function MoviePage(): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const film = useAppSelector((state) => state.film);
-  const similarFilms = useAppSelector((state) => state.similarFilms);
-  const favoriteFilmsLength = useAppSelector((state) => state.films).filter((filmA) => filmA.isFavorite).length;
+  const authStatus = useAppSelector(selectAuth);
+  const film = useAppSelector(selectFilm);
+  const similarFilms = useAppSelector(selectSimilarFilms);
+  const favoriteFilmsLength = useAppSelector(selectFavoriteFilms).length;
 
 
   useEffect(() => {
@@ -92,7 +94,7 @@ function MoviePage(): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Tabs films={films}/>
+              <Tabs/>
             </div>
           </div>
         </div>

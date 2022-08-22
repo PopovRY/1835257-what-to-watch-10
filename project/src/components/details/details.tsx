@@ -1,26 +1,13 @@
-import { useParams} from 'react-router-dom';
-import {Film} from '../../types/film';
+import {Films} from '../../types/films';
 import {huminazeFilmDuration} from '../../utils';
-import NotFoundPage from '../../pages/not-found-page/not-found-page';
-
 
 type DetailsProps = {
-  films: Film[];
+  film: Films;
 }
 
-function Details({ films }: DetailsProps): JSX.Element {
-  const {id} = useParams();
-  const film = films.find((item) => item.id === Number(id));
+function Details({ film }: DetailsProps): JSX.Element {
 
-  if(!film) {
-    return (
-      <div>
-        <NotFoundPage/>
-      </div>
-    );
-  }
-
-  const actorsList = film.starring[0].split(',').map((star) => `${star}`);
+  const actorsList = film.starring.join(', ');
 
   return (
     <div className="film-card__text film-card__row">

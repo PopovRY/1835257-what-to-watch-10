@@ -1,6 +1,6 @@
 import MainPage from '../../pages/main-page/main-page';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../consts';
+import {AppRoute} from '../../consts';
 import LoginPage from '../../pages/login/login-page';
 import MyListPage from '../../pages/my-list-page/my-list-page';
 import PrivateRoute from '../private-route/private-route';
@@ -10,14 +10,13 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import MoviePage from '../../pages/movie-page/movie-page';
 import {useAppSelector} from '../../hooks';
 import PreLoader from '../pre-loader/pre-loader';
-
-const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
+import {selectLoadingDataStatus} from '../../store/films-process/selectors';
+import {selectAuth} from '../../store/user-process/selectors';
 
 function App(): JSX.Element {
-
-  const { isDataLoaded, authorizationStatus } = useAppSelector((state) => state);
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  const isDataLoaded = useAppSelector(selectLoadingDataStatus);
+  const authorizationStatus = useAppSelector(selectAuth);
+  if (isDataLoaded) {
     return (
       <PreLoader />
     );

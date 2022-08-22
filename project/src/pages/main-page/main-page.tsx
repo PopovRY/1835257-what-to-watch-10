@@ -1,26 +1,20 @@
 import Footer from '../../components/footer/footer';
 import FilmsList from '../../components/film-list/films-list';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import IconsPlayer from '../../components/icons-player/icons-player';
 import Header from '../../components/header/header';
 import GenresList from '../../components/genres-list/genres-list';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useEffect} from 'react';
-import {resetShowMoreCount} from '../../store/action';
-import PreLoader from '../../components/pre-loader/pre-loader';
+import {useAppSelector} from '../../hooks';
+
+import {selectFavoriteFilms, selectFilms} from '../../store/films-process/selectors';
+import {selectPromoFilm} from '../../store/promo-film-process/selectors';
 
 function MainPage(): JSX.Element {
   const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(resetShowMoreCount());
-  }, [location, dispatch]);
-
-  const favoriteFilmsLength = useAppSelector((state) => state.films).filter((filmA) => filmA.isFavorite).length;
-  const films = useAppSelector((state) => state.films);
-  const promoFilm = useAppSelector((state) => state.promo);
+  const favoriteFilmsLength = useAppSelector(selectFavoriteFilms).length;
+  const films = useAppSelector(selectFilms);
+  const promoFilm = useAppSelector(selectPromoFilm);
 
   const myListButtonClickHandler = () => {
     const path = '/mylist';
@@ -31,13 +25,6 @@ function MainPage(): JSX.Element {
     const path = '/player/1';
     navigate(path);
   };
-
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
-  if (isDataLoaded) {
-    return (
-      <PreLoader />
-    );
-  }
 
   return (
     <>

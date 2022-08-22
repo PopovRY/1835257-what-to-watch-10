@@ -4,13 +4,14 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useNavigate} from 'react-router-dom';
 import {loginAction} from '../../store/api-action';
 import {AppRoute, AuthorizationStatus} from '../../consts';
+import {selectAuth, selectError} from '../../store/user-process/selectors';
 
 function LoginForm(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
-  const error = useAppSelector((state) => state.error);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const error = useAppSelector(selectError);
+  const authStatus = useAppSelector(selectAuth);
   const navigate = useNavigate();
 
   const handleFromSubmit = (evt: FormEvent<HTMLFormElement>) => {
