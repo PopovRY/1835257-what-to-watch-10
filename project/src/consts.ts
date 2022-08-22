@@ -26,6 +26,7 @@ export const DEFAULT_GENRE = 'All genres';
 export const SHOW_MORE_NEXT_COUNT = 8;
 export const SHOW_MORE_BEGIN_COUNT = 8;
 export const TIMEOUT_SHOW_ERROR = 5000;
+export const MAX_GENRES_COUNT = 10;
 
 export enum APIRoute {
   Films = '/films',
@@ -53,3 +54,19 @@ export const enum RatePoints {
   HighGood = 8,
   Awesome = 10,
 }
+
+export enum NameSpace {
+  User = 'USER',
+  PromoFilm = 'PROMO_FILM',
+  Films = 'FILMS',
+  Film = 'FILM',
+  AddReview = 'ADD_REVIEW',
+}
+
+export enum Tab {
+  Overview = 'overview',
+  Details = 'details',
+  Reviews = 'reviews',
+}
+
+export const PLAY_TIMEOUT = 1000;

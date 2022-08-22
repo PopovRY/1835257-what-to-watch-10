@@ -1,5 +1,4 @@
-import {Film} from './types/film';
-import {RatePoints, Rating} from './consts';
+import {RatePoints, Rating, Tab} from './consts';
 
 export const huminazeFilmDuration = (minutes: number) => {
   const MINUTES_IN_HOUR = 60;
@@ -11,10 +10,6 @@ export const huminazeFilmDuration = (minutes: number) => {
   }
   return `${hours.toFixed(0)}h ${minutes % MINUTES_IN_HOUR}m`;
 };
-
-export const getGenres = (filmList: Film[]): string[] =>
-  [...new Set(filmList.map((film) => film.genre))];
-
 
 function getTextRating(rate?: number) {
   let rating = '';
@@ -39,5 +34,10 @@ function getTextRating(rate?: number) {
   }
   return rating;
 }
+
+export const getTab = () => {
+  const queryParams = (new URL(document.location.href)).searchParams;
+  return queryParams.get('tab') ?? Tab.Overview;
+};
 
 export default getTextRating;

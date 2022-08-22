@@ -1,26 +1,20 @@
 import Footer from '../../components/footer/footer';
-import FilmsList from '../../components/film-list/films-list';
-import {useLocation, useNavigate} from 'react-router-dom';
-import IconsPlayer from '../../components/icons-player/icons-player';
+import FilmsListMain from '../../components/films-list-main/films-list-main';
+import {useNavigate} from 'react-router-dom';
 import Header from '../../components/header/header';
-import GenresList from '../../components/genres-list/genres-list';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useEffect} from 'react';
-import {resetShowMoreCount} from '../../store/action';
-import PreLoader from '../../components/pre-loader/pre-loader';
+import {useAppSelector} from '../../hooks';
+import {selectFavoriteFilms, selectFilms} from '../../store/films-process/selectors';
+import {selectPromoFilm} from '../../store/promo-film-process/selectors';
+import GenreTabs from '../../components/genre-tabs/genre-tabs';
 
 function MainPage(): JSX.Element {
+
   const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(resetShowMoreCount());
-  }, [location, dispatch]);
-
-  const favoriteFilmsLength = useAppSelector((state) => state.films).filter((filmA) => filmA.isFavorite).length;
-  const films = useAppSelector((state) => state.films);
-  const promoFilm = useAppSelector((state) => state.promo);
+  const favoriteFilmsLength = useAppSelector(selectFavoriteFilms).length;
+  const films = useAppSelector(selectFilms);
+  const promoFilm = useAppSelector(selectPromoFilm);
+  const { name, backgroundImage, posterImage, genre, released } = promoFilm;
 
   const myListButtonClickHandler = () => {
     const path = '/mylist';
@@ -32,20 +26,11 @@ function MainPage(): JSX.Element {
     navigate(path);
   };
 
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
-  if (isDataLoaded) {
-    return (
-      <PreLoader />
-    );
-  }
-
   return (
     <>
-      <IconsPlayer/>
-
       <section className="film-card" >
         <div className="film-card__bg">
-          <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -55,14 +40,14 @@ function MainPage(): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={promoFilm.posterImage} alt={promoFilm.name} width="218" height="327" />
+              <img src={posterImage} alt={name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilm.name}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.released}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -89,11 +74,8 @@ function MainPage(): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList />
-
-          <div className="catalog__films-list">
-            <FilmsList films={films} />
-          </div>
+          <GenreTabs />
+          <FilmsListMain films={films} />
 
         </section>
 

@@ -5,21 +5,27 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../../components/header/header';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import SimilarFilms from '../../components/similar-films/similar-films';
-import {AuthorizationStatus} from '../../consts';
+import {AuthorizationStatus, Tab} from '../../consts';
 import {fetchFilm, fetchFilmComments, fetchSimilarFilms} from '../../store/api-action';
 import {useEffect} from 'react';
 import AddReviewButton from '../../components/review-btn/review-btn';
-import {films} from '../../mocks/films';
+import {selectAuth} from '../../store/user-process/selectors';
+import {selectComments, selectFilm, selectSimilarFilms} from '../../store/film-process/selectors';
+import {selectFavoriteFilms} from '../../store/films-process/selectors';
+import {getTab} from '../../utils';
+import Overview from '../../components/overview/overview';
+import Details from '../../components/details/details';
+import Reviews from '../../components/reviews/reviews';
 
 function MoviePage(): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const film = useAppSelector((state) => state.film);
-  const similarFilms = useAppSelector((state) => state.similarFilms);
-  const favoriteFilmsLength = useAppSelector((state) => state.films).filter((filmA) => filmA.isFavorite).length;
-
+  const authStatus = useAppSelector(selectAuth);
+  const filmComments = useAppSelector(selectComments);
+  const film = useAppSelector(selectFilm);
+  const similarFilms = useAppSelector(selectSimilarFilms);
+  const favoriteFilmsLength = useAppSelector(selectFavoriteFilms).length;
 
   useEffect(() => {
     dispatch(fetchFilm(params.id));
@@ -36,6 +42,8 @@ function MoviePage(): JSX.Element {
     const path = '/mylist';
     navigate(path);
   };
+
+  const tab = getTab();
 
   const bckgColor = {
     backgroundColor: `${film?.backgroundColor}`
@@ -79,7 +87,7 @@ function MoviePage(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">{favoriteFilmsLength}</span>
                 </button>
-                {authStatus === AuthorizationStatus.Auth ? <AddReviewButton id={film.id} /> : null}
+                {authStatus === AuthorizationStatus.Auth && <AddReviewButton id={film.id} />}
               </div>
             </div>
           </div>
@@ -92,7 +100,22 @@ function MoviePage(): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Tabs films={films}/>
+              <Tabs />
+
+              {
+                tab === Tab.Overview &&
+                <Overview film={film} />
+              }
+
+              {
+                tab === Tab.Details &&
+                <Details film={film} />
+              }
+
+              {
+                tab === Tab.Reviews &&
+                <Reviews reviews={filmComments} />
+              }
             </div>
           </div>
         </div>

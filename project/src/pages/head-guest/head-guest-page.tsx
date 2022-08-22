@@ -1,4 +1,5 @@
 import Logo from '../../components/logo/logo';
+import {Link} from 'react-router-dom';
 
 function HeadGuestPage(): JSX.Element {
   return (
@@ -13,10 +14,9 @@ function HeadGuestPage(): JSX.Element {
         <Logo />
 
         <div className="user-block">
-          <a href="sign-in.html" className="user-block__link">Sign in</a>
+          <Link className="user-block__link" to={'/films'} title={'/films'}>Sign in</Link>
         </div>
       </header>
-
     </section>
   );
 }

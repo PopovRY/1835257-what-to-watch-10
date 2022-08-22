@@ -3,6 +3,8 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Link} from 'react-router-dom';
 import {logoutAction} from '../../store/api-action';
 import {AuthorizationStatus} from '../../consts';
+import {selectAuth} from '../../store/user-process/selectors';
+import className from 'classnames';
 
 type HeaderProps = {
   isMyList?: boolean;
@@ -10,16 +12,14 @@ type HeaderProps = {
 }
 
 function Header({ isMyList, favoriteCount }: HeaderProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
   return (
-    <header className="page-header film-card__head">
-
+    <header className={className('page-header', isMyList ? 'user-page__head' : 'film-card__head')}>
       <Logo />
       {isMyList ?
         <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{favoriteCount}</span></h1> :
         null}
-
 
       {authorizationStatus === AuthorizationStatus.Auth ?
         <ul className="user-block">
