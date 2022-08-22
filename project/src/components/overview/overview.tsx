@@ -1,8 +1,8 @@
-import {Films} from '../../types/films';
+import {Film} from '../../types/film';
 import getTextRating from '../../utils';
 
 type OverviewProps = {
-  film: Films;
+  film: Film;
 }
 
 function Overview({film}: OverviewProps): JSX.Element {

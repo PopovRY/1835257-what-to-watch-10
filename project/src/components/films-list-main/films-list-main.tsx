@@ -1,4 +1,4 @@
-import {Films} from '../../types/films';
+import {Film} from '../../types/film';
 import FilmCard from '../film-card/film-card';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {SHOW_MORE_NEXT_COUNT} from '../../consts';
@@ -8,11 +8,7 @@ import {selectGenre, selectRenderedFilmCount} from '../../store/films-process/se
 import {useMemo} from 'react';
 
 
-type FilmListProps = {
-  films: Films[];
-}
-
-function FilmsList({ films }: FilmListProps): JSX.Element {
+function FilmsListMain({ films }: { films: Film[] }): JSX.Element {
   const dispatch = useAppDispatch();
   const selectedGenre = useAppSelector(selectGenre);
   const renderedFilmCount = useAppSelector(selectRenderedFilmCount);
@@ -44,4 +40,4 @@ function FilmsList({ films }: FilmListProps): JSX.Element {
   );
 }
 
-export default FilmsList;
+export default FilmsListMain;

@@ -1,15 +1,15 @@
-import {Films} from '../../types/films';
+import {Film} from '../../types/film';
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../consts';
 import {fetchPromoAction} from '../api-action';
 
 type InitialState = {
-  promoFilm: Films,
+  promoFilm: Film,
   isDataLoaded: boolean;
 }
 
 const initialState: InitialState = {
-  promoFilm: {} as Films,
+  promoFilm: {} as Film,
   isDataLoaded: false,
 };
 

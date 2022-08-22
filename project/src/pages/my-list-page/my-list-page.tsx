@@ -8,7 +8,6 @@ import {selectFavoriteFilms} from '../../store/films-process/selectors';
 function MyListPage(): JSX.Element {
   const favoriteFilmsLength = useAppSelector(selectFavoriteFilms).length;
   const films = useAppSelector(selectFavoriteFilms);
-
   const filmsList =
     films?.map((film) => (
       <FilmCard key={film.id}
@@ -16,8 +15,6 @@ function MyListPage(): JSX.Element {
       />
     ));
   return (
-
-
     <div className="user-page">
       <Header
         isMyList
@@ -34,7 +31,6 @@ function MyListPage(): JSX.Element {
 
       <Footer />
     </div>
-
   );
 }
 

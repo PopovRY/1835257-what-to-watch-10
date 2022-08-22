@@ -1,8 +1,8 @@
-import {Films} from '../../types/films';
+import {Film} from '../../types/film';
 import {huminazeFilmDuration} from '../../utils';
 
 type DetailsProps = {
-  film: Films;
+  film: Film;
 }
 
 function Details({ film }: DetailsProps): JSX.Element {

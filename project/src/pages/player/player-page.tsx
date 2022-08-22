@@ -16,12 +16,12 @@ function PlayerPage(): JSX.Element {
   }, [dispatch, params.id]);
 
   const onExitButtonClickHandler = () => {
-    const path = `/films/${film?.id}`;
+    const path = `/films/${film.id}`;
     navigate(path);
   };
 
-  if(!film.name) {
-    return <NotFoundPage/>;
+  if (!film.name) {
+    return <NotFoundPage />;
   }
 
   return (

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {APIRoute, AppRoute} from '../consts';
-import {Films} from '../types/films';
+import {Film} from '../types/film';
 import {AxiosInstance} from 'axios';
 import {AppDispatch, State} from '../types/state';
 import {AuthData} from '../types/auth-data';
@@ -8,26 +8,26 @@ import {UserData} from '../types/user-data';
 import {dropToken, saveToken} from '../services/token';
 import {NewCommentType, ReviewType} from '../types/comments';
 
-export const fetchFilmAction = createAsyncThunk<Films[], undefined, {
+export const fetchFilmAction = createAsyncThunk<Film[], undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'fetchFilms',
   async (_arg, { extra: api }) => {
-    const {data} = await api.get<Films[]>(APIRoute.Films);
+    const {data} = await api.get<Film[]>(APIRoute.Films);
     return data;
   },
 );
 
-export const fetchPromoAction = createAsyncThunk<Films, undefined, {
+export const fetchPromoAction = createAsyncThunk<Film, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'data/fetchPromo',
   async (_arg, { extra: api }) => {
-    const { data } = await api.get<Films>(APIRoute.Promo);
+    const { data } = await api.get<Film>(APIRoute.Promo);
     return data;
   },
 );
@@ -67,26 +67,26 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const fetchFilm = createAsyncThunk<Films, string | undefined, {
+export const fetchFilm = createAsyncThunk<Film, string | undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'data/fetchFilm',
   async (filmId, { extra: api }) => {
-    const { data } = await api.get<Films>(`${AppRoute.Films}${filmId}`);
+    const { data } = await api.get<Film>(`${AppRoute.Films}${filmId}`);
     return data;
   },
 );
 
-export const fetchSimilarFilms = createAsyncThunk<Films[], string | undefined, {
+export const fetchSimilarFilms = createAsyncThunk<Film[], string | undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'data/fetchSimilarFilm',
   async (filmId, { extra: api }) => {
-    const { data } = await api.get<Films[]>(`${AppRoute.Films}${filmId}/similar`);
+    const { data } = await api.get<Film[]>(`${AppRoute.Films}${filmId}/similar`);
     const filteredData = data.filter((film) => film.id !== Number(filmId));
     return filteredData;
   },

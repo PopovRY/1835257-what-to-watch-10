@@ -16,7 +16,6 @@ function HeadGuestPage(): JSX.Element {
           <a href="sign-in.html" className="user-block__link">Sign in</a>
         </div>
       </header>
-
     </section>
   );
 }

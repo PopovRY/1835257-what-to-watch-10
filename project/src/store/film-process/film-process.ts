@@ -1,18 +1,18 @@
-import {Films} from '../../types/films';
+import {Film} from '../../types/film';
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../consts';
 import {fetchFilm, fetchFilmComments, fetchSimilarFilms} from '../api-action';
 import {ReviewType} from '../../types/comments';
 
 type InitialState = {
-  film: Films,
-  similarFilms: Films[],
+  film: Film,
+  similarFilms: Film[],
   filmComments: ReviewType[] | [],
   isDataLoaded: boolean;
 }
 
 const initialState: InitialState = {
-  film: {} as Films,
+  film: {} as Film,
   filmComments: [],
   similarFilms: [],
   isDataLoaded: false,

@@ -68,3 +68,5 @@ export enum Tab {
   Details = 'details',
   Reviews = 'reviews',
 }
+
+export const PLAY_TIMEOUT = 1000;

@@ -1,14 +1,14 @@
 import {Link} from 'react-router-dom';
-import {Films} from '../../types/films';
+import {Film} from '../../types/film';
 import {useEffect, useRef, useState} from 'react';
+import {PLAY_TIMEOUT} from '../../consts';
 
-const PLAY_TIMEOUT = 1000;
 
 type FilmCardProps = {
-  film: Films;
+  film: Film;
 }
 
-export function FilmCard({film}: FilmCardProps): JSX.Element {
+function FilmCard({film}: FilmCardProps): JSX.Element {
 
   const { id, previewImage, previewVideoLink, name } = film;
 
@@ -20,7 +20,9 @@ export function FilmCard({film}: FilmCardProps): JSX.Element {
       if (isPlaying) {
         videoRef.current?.play();
       }
-    }, PLAY_TIMEOUT);
+    }, PLAY_TIMEOUT
+    );
+
     if (!isPlaying) {
       videoRef.current?.pause();
       videoRef.current?.load();

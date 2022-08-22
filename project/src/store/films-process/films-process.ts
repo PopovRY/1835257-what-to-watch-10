@@ -1,11 +1,11 @@
-import {Films} from '../../types/films';
+import {Film} from '../../types/film';
 import {createSlice} from '@reduxjs/toolkit';
 import {DEFAULT_GENRE, NameSpace, SHOW_MORE_BEGIN_COUNT, SHOW_MORE_NEXT_COUNT} from '../../consts';
 import {fetchFilmAction} from '../api-action';
 import {changeGenre, showMore} from '../action';
 
 type InitialState = {
-  films: Films[],
+  films: Film[],
   isDataLoaded: boolean;
   genre: string;
   renderedFilmCount: number,

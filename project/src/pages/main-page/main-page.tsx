@@ -1,13 +1,11 @@
 import Footer from '../../components/footer/footer';
-import FilmsList from '../../components/film-list/films-list';
+import FilmsListMain from '../../components/films-list-main/films-list-main';
 import {useNavigate} from 'react-router-dom';
-import IconsPlayer from '../../components/icons-player/icons-player';
 import Header from '../../components/header/header';
-import GenresList from '../../components/genres-list/genres-list';
 import {useAppSelector} from '../../hooks';
-
 import {selectFavoriteFilms, selectFilms} from '../../store/films-process/selectors';
 import {selectPromoFilm} from '../../store/promo-film-process/selectors';
+import GenreTabs from '../../components/genre-tabs/genre-tabs';
 
 function MainPage(): JSX.Element {
   const navigate = useNavigate();
@@ -28,8 +26,6 @@ function MainPage(): JSX.Element {
 
   return (
     <>
-      <IconsPlayer/>
-
       <section className="film-card" >
         <div className="film-card__bg">
           <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
@@ -76,11 +72,8 @@ function MainPage(): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList />
-
-          <div className="catalog__films-list">
-            <FilmsList films={films} />
-          </div>
+          <GenreTabs />
+          <FilmsListMain films={films} />
 
         </section>
 
