@@ -87,7 +87,7 @@ function MoviePage(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">{favoriteFilmsLength}</span>
                 </button>
-                {authStatus === AuthorizationStatus.Auth ? <AddReviewButton id={film.id} /> : null}
+                {authStatus === AuthorizationStatus.Auth && <AddReviewButton id={film.id} />}
               </div>
             </div>
           </div>
