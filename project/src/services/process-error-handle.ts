@@ -1,6 +1,6 @@
-import {store} from '../store';
-import {setError} from '../store/action';
+import { store } from '../store';
 import {TIMEOUT_SHOW_ERROR} from '../consts';
+import {setError} from '../store/action';
 
 export const processErrorHandle = (message: string): void => {
   store.dispatch(setError(message));

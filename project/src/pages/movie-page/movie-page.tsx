@@ -26,7 +26,7 @@ function MoviePage(): JSX.Element {
   const film = useAppSelector(selectFilm);
   const similarFilms = useAppSelector(selectSimilarFilms);
 
-  const {backgroundImage, name, genre, released, id, posterImage, } = film;
+  const {backgroundImage, name, genre, released, id, posterImage, backgroundColor } = film;
 
   useEffect(() => {
     dispatch(fetchFilm(params.id));
@@ -35,17 +35,17 @@ function MoviePage(): JSX.Element {
   }, [dispatch, params.id]);
 
   const onPlayButtonClickHandler = () => {
-    const path = `/player/${film.id}`;
+    const path = `/player/${id}`;
     navigate(path);
   };
 
   const tab = getTab();
 
   const bckgColor = {
-    backgroundColor: `${film?.backgroundColor}`
+    backgroundColor: `${backgroundColor}`
   };
 
-  if (!film.name) {
+  if (!name) {
     return <NotFoundPage />;
   }
 

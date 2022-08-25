@@ -16,16 +16,10 @@ export enum AuthorizationStatus {
 }
 export const DEFALUT_RATING_VALUE = 0;
 
-export enum TabNames {
-  Overview = 'Overview',
-  Details = 'Details',
-  Reviews = 'Reviews',
-}
-
 export const DEFAULT_GENRE = 'All genres';
 export const SHOW_MORE_NEXT_COUNT = 8;
 export const SHOW_MORE_BEGIN_COUNT = 8;
-export const TIMEOUT_SHOW_ERROR = 5000;
+export const TIMEOUT_SHOW_ERROR = 2000;
 export const MAX_GENRES_COUNT = 10;
 
 export enum APIRoute {

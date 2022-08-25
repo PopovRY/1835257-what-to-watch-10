@@ -1,11 +1,10 @@
-import {Link, useParams} from 'react-router-dom';
-import Logo from '../../components/logo/logo';
+import {useParams} from 'react-router-dom';
 import SendingReviewsForm from '../../components/send-review/send-review';
-import NotFoundPage from '../not-found-page/not-found-page';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
-import {fetchFilm, logoutAction} from '../../store/api-action';
+import {fetchFilm} from '../../store/api-action';
 import {selectFilm} from '../../store/film-process/selectors';
+import Header from '../../components/header/header';
 
 
 function AddReviewPage(): JSX.Element {
@@ -13,64 +12,30 @@ function AddReviewPage(): JSX.Element {
   const film = useAppSelector(selectFilm);
   const dispatch = useAppDispatch();
 
+  const {posterImage, name, id,} = film;
+
   useEffect(() => {
     dispatch(fetchFilm(params.id));
   }, [dispatch, params.id]);
-
-  if (!film.name) {
-    return <NotFoundPage />;
-  }
 
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film?.posterImage} alt={film?.name} />
+          <img src={posterImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
-          <Logo/>
-
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <Link to={`/films/${film?.id}`} className="breadcrumbs__link">{film?.name}</Link>
-              </li>
-              <li className="breadcrumbs__item">
-                <Link to={`/films/${film.id}/review`} className="breadcrumbs__link">Add review</Link>
-              </li>
-            </ul>
-          </nav>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  dispatch(logoutAction());
-                }}
-                to="#"
-                className="user-block__link"
-              >Sign out
-              </Link>
-            </li>
-          </ul>
-        </header>
+        <Header/>
 
         <div className="film-card__poster film-card__poster--small">
-          <img key={film?.id} src={film?.posterImage} alt={film?.name} width="218" height="327" />
+          <img key={id} src={posterImage} alt={name} width="218" height="327" />
         </div>
       </div>
 
       <div className="add-review">
-        <SendingReviewsForm key={film.id} />
+        <SendingReviewsForm key={id} />
 
       </div>
 

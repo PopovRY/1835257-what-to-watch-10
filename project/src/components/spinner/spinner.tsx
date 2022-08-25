@@ -2,13 +2,10 @@ import './spinner.css';
 
 function Spinner(): JSX.Element {
   return (
-    <div className="center">
-      <div className="wave"></div>
-      <div className="wave"></div>
-      <div className="wave"></div>
-      <div className="wave"></div>
-      <div className="wave"></div>
-    </div>);
+    <div className="spinner">
+      <div className="spinner__element" />
+    </div>
+  );
 }
 
 export default Spinner;
