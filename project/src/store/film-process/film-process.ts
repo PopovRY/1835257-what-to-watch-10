@@ -1,13 +1,13 @@
 import {Film} from '../../types/film';
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../consts';
-import {fetchFilm, fetchFilmComments, fetchSimilarFilms} from '../api-action';
+import {addToFavorite, fetchFilm, fetchFilmComments, fetchSimilarFilms} from '../api-action';
 import {ReviewType} from '../../types/comments';
 
 type InitialState = {
-  film: Film,
-  similarFilms: Film[],
-  filmComments: ReviewType[] | [],
+  film: Film;
+  similarFilms: Film[];
+  filmComments: ReviewType[] | [];
   isDataLoaded: boolean;
 }
 
@@ -44,6 +44,11 @@ export const filmProcess = createSlice({
       .addCase(fetchFilmComments.fulfilled, (state, action) => {
         state.filmComments = action.payload;
         state.isDataLoaded = false;
+      })
+      .addCase(addToFavorite.fulfilled, (state, action) => {
+        if (state.film.id === action.payload.id) {
+          state.film = action.payload;
+        }
       });
   }
 });

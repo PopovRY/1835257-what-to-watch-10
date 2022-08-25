@@ -11,11 +11,11 @@ import {useEffect} from 'react';
 import AddReviewButton from '../../components/review-btn/review-btn';
 import {selectAuth} from '../../store/user-process/selectors';
 import {selectComments, selectFilm, selectSimilarFilms} from '../../store/film-process/selectors';
-import {selectFavoriteFilms} from '../../store/films-process/selectors';
 import {getTab} from '../../utils';
 import Overview from '../../components/overview/overview';
 import Details from '../../components/details/details';
 import Reviews from '../../components/reviews/reviews';
+import MyListBtn from '../../components/my-list-button/my-list-button';
 
 function MoviePage(): JSX.Element {
   const navigate = useNavigate();
@@ -25,7 +25,8 @@ function MoviePage(): JSX.Element {
   const filmComments = useAppSelector(selectComments);
   const film = useAppSelector(selectFilm);
   const similarFilms = useAppSelector(selectSimilarFilms);
-  const favoriteFilmsLength = useAppSelector(selectFavoriteFilms).length;
+
+  const {backgroundImage, name, genre, released, id, posterImage, } = film;
 
   useEffect(() => {
     dispatch(fetchFilm(params.id));
@@ -35,11 +36,6 @@ function MoviePage(): JSX.Element {
 
   const onPlayButtonClickHandler = () => {
     const path = `/player/${film.id}`;
-    navigate(path);
-  };
-
-  const onMyListButtonClickHandler = () => {
-    const path = '/mylist';
     navigate(path);
   };
 
@@ -58,7 +54,7 @@ function MoviePage(): JSX.Element {
       <section className="film-card film-card--full" style={bckgColor}>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.backgroundImage} alt={film.name} />
+            <img src={backgroundImage} alt={name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -67,10 +63,10 @@ function MoviePage(): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film.name}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.released}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -80,14 +76,8 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button" onClick={onMyListButtonClickHandler}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">{favoriteFilmsLength}</span>
-                </button>
-                {authStatus === AuthorizationStatus.Auth && <AddReviewButton id={film.id} />}
+                <MyListBtn />
+                {authStatus === AuthorizationStatus.Auth && <AddReviewButton id={id} />}
               </div>
             </div>
           </div>
@@ -96,7 +86,7 @@ function MoviePage(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.posterImage} alt={film.name} width="218" height="327" />
+              <img src={posterImage} alt={name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">

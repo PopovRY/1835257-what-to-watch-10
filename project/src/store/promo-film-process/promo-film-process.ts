@@ -4,7 +4,7 @@ import {NameSpace} from '../../consts';
 import {fetchPromoAction} from '../api-action';
 
 type InitialState = {
-  promoFilm: Film,
+  promoFilm: Film;
   isDataLoaded: boolean;
 }
 

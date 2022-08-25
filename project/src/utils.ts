@@ -1,4 +1,7 @@
-import {RatePoints, Rating, Tab} from './consts';
+import {DurationTemplate, HOUR, RatePoints, Rating, Tab, TimeMetric} from './consts';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+dayjs.extend(duration);
 
 export const huminazeFilmDuration = (minutes: number) => {
   const MINUTES_IN_HOUR = 60;
@@ -38,6 +41,16 @@ function getTextRating(rate?: number) {
 export const getTab = () => {
   const queryParams = (new URL(document.location.href)).searchParams;
   return queryParams.get('tab') ?? Tab.Overview;
+};
+
+export const formattingLastTime = (runtime: number) => {
+  const timeDuration = dayjs.duration(runtime, TimeMetric.Second);
+
+  if ((runtime / HOUR) < 1) {
+    return timeDuration.format(DurationTemplate.MinutesSeconds);
+  }
+
+  return timeDuration.format(DurationTemplate.HoursMinutesSeconds);
 };
 
 export default getTextRating;

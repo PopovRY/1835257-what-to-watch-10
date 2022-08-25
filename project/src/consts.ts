@@ -35,9 +35,8 @@ export enum APIRoute {
   Logout = '/logout',
   Comments = '/comments',
   AddReview = '/films/:id/*',
+  Favorite = '/favorite',
 }
-
-export const MAX_SIMILAR_FILMS_COUNT = 4;
 
 export const enum Rating {
   Bad = 'Bad',
@@ -70,3 +69,21 @@ export enum Tab {
 }
 
 export const PLAY_TIMEOUT = 1000;
+
+export enum DurationTemplate {
+  MinutesSeconds = 'm[:] s',
+  HoursMinutesSeconds = 'H[:] m[:] s',
+  HoursMinutes = 'H[h] m[m]'
+}
+
+export enum TimeMetric {
+  Second = 'seconds',
+  Minute = 'minutes',
+}
+
+export const HOUR = 360;
+
+export enum PlayerProgress {
+  Start = 0,
+  End = 100,
+}

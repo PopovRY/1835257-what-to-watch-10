@@ -4,7 +4,7 @@ import SendingReviewsForm from '../../components/send-review/send-review';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
-import {fetchFilm} from '../../store/api-action';
+import {fetchFilm, logoutAction} from '../../store/api-action';
 import {selectFilm} from '../../store/film-process/selectors';
 
 
@@ -51,7 +51,15 @@ function AddReviewPage(): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <Link to="#" className="user-block__link">Sign out</Link>
+              <Link
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  dispatch(logoutAction());
+                }}
+                to="#"
+                className="user-block__link"
+              >Sign out
+              </Link>
             </li>
           </ul>
         </header>

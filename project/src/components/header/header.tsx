@@ -2,8 +2,8 @@ import Logo from '../logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Link} from 'react-router-dom';
 import {logoutAction} from '../../store/api-action';
-import {AuthorizationStatus} from '../../consts';
-import {selectAuth} from '../../store/user-process/selectors';
+import {AppRoute, AuthorizationStatus} from '../../consts';
+import {selectAuth, selectAvatar} from '../../store/user-process/selectors';
 import className from 'classnames';
 
 type HeaderProps = {
@@ -13,6 +13,7 @@ type HeaderProps = {
 
 function Header({ isMyList, favoriteCount }: HeaderProps): JSX.Element {
   const authorizationStatus = useAppSelector(selectAuth);
+  const avatarUrl = useAppSelector(selectAvatar);
   const dispatch = useAppDispatch();
   return (
     <header className={className('page-header', isMyList ? 'user-page__head' : 'film-card__head')}>
@@ -24,9 +25,11 @@ function Header({ isMyList, favoriteCount }: HeaderProps): JSX.Element {
       {authorizationStatus === AuthorizationStatus.Auth ?
         <ul className="user-block">
           <li className="user-block__item" >
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
+            <Link to={AppRoute.MyList} >
+              <div className="user-block__avatar">
+                <img src={avatarUrl} alt="User avatar" width="63" height="63" />
+              </div>
+            </Link>
           </li >
           <li className="user-block__item">
             <Link

@@ -1,14 +1,16 @@
 import {Film} from '../../types/film';
 import {createSlice} from '@reduxjs/toolkit';
 import {DEFAULT_GENRE, NameSpace, SHOW_MORE_BEGIN_COUNT, SHOW_MORE_NEXT_COUNT} from '../../consts';
-import {fetchFilmAction} from '../api-action';
+import {addToFavorite, fetchFavorites, fetchFilmAction} from '../api-action';
 import {changeGenre, showMore} from '../action';
 
 type InitialState = {
-  films: Film[],
+  films: Film[];
   isDataLoaded: boolean;
   genre: string;
-  renderedFilmCount: number,
+  renderedFilmCount: number;
+  favorites: Film[];
+  isFavsLoaded: boolean;
 }
 
 const initialState: InitialState = {
@@ -16,6 +18,8 @@ const initialState: InitialState = {
   isDataLoaded: false,
   genre: DEFAULT_GENRE,
   renderedFilmCount: SHOW_MORE_BEGIN_COUNT,
+  favorites: [],
+  isFavsLoaded: false,
 };
 
 export const filmsProcess = createSlice({
@@ -37,6 +41,17 @@ export const filmsProcess = createSlice({
       })
       .addCase(showMore, (state, action) => {
         state.renderedFilmCount = action.payload;
+      })
+      .addCase(fetchFavorites.pending, (state) => {
+        state.isFavsLoaded = true;
+      })
+      .addCase(fetchFavorites.fulfilled, (state, action) => {
+        state.isFavsLoaded = false;
+        state.favorites = action.payload;
+      })
+      .addCase(addToFavorite.fulfilled, (state, action) => {
+        const index = state.films.findIndex((item) => item.id === action.payload.id);
+        state.films[index].isFavorite = action.payload.isFavorite;
       });
   }
 });

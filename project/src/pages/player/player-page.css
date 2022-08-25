@@ -1,0 +1,5 @@
+input[type=range].player__progress {
+  position: absolute;
+  cursor: pointer;
+  z-index: 100;
+}

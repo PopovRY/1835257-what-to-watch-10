@@ -3,7 +3,7 @@ import {addReviewAction} from '../api-action';
 import {NameSpace} from '../../consts';
 
 type InitialState = {
-  isDataLoaded: boolean,
+  isDataLoaded: boolean;
 }
 
 const initialState: InitialState = {
