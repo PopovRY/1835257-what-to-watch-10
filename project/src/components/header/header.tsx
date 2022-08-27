@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Link} from 'react-router-dom';
 import {logoutAction} from '../../store/api-action';
 import {AppRoute, AuthorizationStatus} from '../../consts';
-import {selectAuth, selectAvatar} from '../../store/user-process/selectors';
+import {getAuth, getAvatar} from '../../store/user-process/selectors';
 import className from 'classnames';
 
 type HeaderProps = {
@@ -12,8 +12,8 @@ type HeaderProps = {
 }
 
 function Header({ isMyList, favoriteCount }: HeaderProps): JSX.Element {
-  const authorizationStatus = useAppSelector(selectAuth);
-  const avatarUrl = useAppSelector(selectAvatar);
+  const authorizationStatus = useAppSelector(getAuth);
+  const avatarUrl = useAppSelector(getAvatar);
   const dispatch = useAppDispatch();
   return (
     <header className={className('page-header', isMyList ? 'user-page__head' : 'film-card__head')}>

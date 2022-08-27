@@ -1,23 +1,29 @@
 import {AuthorizationStatus, NameSpace} from '../../consts';
-import {createSlice} from '@reduxjs/toolkit';
+import {AnyAction, createSlice} from '@reduxjs/toolkit';
 import {checkAuthAction, loginAction, logoutAction} from '../api-action';
 
 type InitialState = {
   authorizationStatus: AuthorizationStatus;
-  error: string | null | unknown;
+  error: string;
   avatar: string;
+  isSending: boolean;
 }
 
 const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
-  error: null,
+  error: '',
   avatar: '',
+  isSending: false,
 };
 
 export const userProcess = createSlice({
   name: NameSpace.User,
   initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, action) => {
+      state.error = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state,action) => {
@@ -26,19 +32,24 @@ export const userProcess = createSlice({
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        state.avatar = '';
+      })
+      .addCase(loginAction.pending, (state) => {
+        state.isSending = true;
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.avatar = action.payload.avatarUrl;
+        state.isSending = false;
       })
-      .addCase(loginAction.rejected, (state) => {
+      .addCase(loginAction.rejected, (state, action: AnyAction) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        state.avatar = '';
+        state.error = action.payload;
+        state.isSending = false;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        state.avatar = '';
       });
   }
 });
+
+export const { setError } = userProcess.actions;

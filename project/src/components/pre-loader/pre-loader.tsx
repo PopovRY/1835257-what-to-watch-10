@@ -1,6 +1,8 @@
+import Spinner from '../spinner/spinner';
+
 function PreLoader(): JSX.Element {
   return (
-    <p>Loading ...</p>
+    <Spinner />
   );
 }
 

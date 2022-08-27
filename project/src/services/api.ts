@@ -1,13 +1,11 @@
 import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {getToken} from './token';
 import {StatusCodes} from 'http-status-codes';
-import {processErrorHandle} from './process-error-handle';
-
 
 const BACKEND_URL = 'https://10.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
 
-export const createAPI = (): AxiosInstance => {
+export const createAPI = (callback: () => void): AxiosInstance => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
@@ -29,11 +27,11 @@ export const createAPI = (): AxiosInstance => {
     (response: AxiosResponse) => response,
     (error: AxiosError) => {
       const { response } = error;
-      if (response?.status === StatusCodes.BAD_REQUEST) {
-        processErrorHandle('Error with authorization');
+      if (response?.status === StatusCodes.NOT_FOUND) {
+        callback();
       }
 
-      throw error;
+      return Promise.reject(error);
     }
   );
 

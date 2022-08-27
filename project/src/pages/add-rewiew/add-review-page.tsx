@@ -3,13 +3,13 @@ import SendingReviewsForm from '../../components/send-review/send-review';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
 import {fetchFilm} from '../../store/api-action';
-import {selectFilm} from '../../store/film-process/selectors';
+import {getFilm} from '../../store/film-process/selectors';
 import Header from '../../components/header/header';
 
 
 function AddReviewPage(): JSX.Element {
   const params = useParams();
-  const film = useAppSelector(selectFilm);
+  const film = useAppSelector(getFilm);
   const dispatch = useAppDispatch();
 
   const {posterImage, name, id,} = film;

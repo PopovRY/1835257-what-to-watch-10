@@ -1,4 +1,4 @@
-import {DurationTemplate, HOUR, RatePoints, Rating, Tab, TimeMetric} from './consts';
+import {DurationTemplate, ErrorMessage, HOUR, RatePoints, Rating, Tab, TimeMetric} from './consts';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
@@ -51,6 +51,21 @@ export const formattingLastTime = (runtime: number) => {
   }
 
   return timeDuration.format(DurationTemplate.HoursMinutesSeconds);
+};
+
+export const signInValidator = (email: string, password: string): string | null => {
+  const isEmailValid = /^\S+@\S+\.\S+$/.test(email);
+  const isPasswordValid = /^(?=^[a-zA-Z0-9]{2,}$)(?=.*\d)(?=.*[a-zA-Z]).*$/.test(password);
+
+  if (!email || !isPasswordValid) {
+    return ErrorMessage.SignInValidate;
+  }
+
+  if (!isEmailValid) {
+    return ErrorMessage.IncorrectEmail;
+  }
+
+  return null;
 };
 
 export default getTextRating;

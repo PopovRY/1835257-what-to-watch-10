@@ -10,12 +10,12 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import MoviePage from '../../pages/movie-page/movie-page';
 import {useAppSelector} from '../../hooks';
 import PreLoader from '../pre-loader/pre-loader';
-import {selectLoadingDataStatus} from '../../store/films-process/selectors';
-import {selectAuth} from '../../store/user-process/selectors';
+import {getLoadingDataStatus} from '../../store/films-process/selectors';
+import {getAuth} from '../../store/user-process/selectors';
 
 function App(): JSX.Element {
-  const isDataLoaded = useAppSelector(selectLoadingDataStatus);
-  const authorizationStatus = useAppSelector(selectAuth);
+  const isDataLoaded = useAppSelector(getLoadingDataStatus);
+  const authorizationStatus = useAppSelector(getAuth);
   if (isDataLoaded) {
     return (
       <PreLoader />

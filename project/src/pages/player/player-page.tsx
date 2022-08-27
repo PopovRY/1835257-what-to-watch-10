@@ -3,7 +3,7 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {fetchFilm} from '../../store/api-action';
-import {selectFilm} from '../../store/film-process/selectors';
+import {getFilm} from '../../store/film-process/selectors';
 import {PlayerProgress} from '../../consts';
 import {formattingLastTime} from '../../utils';
 import Spinner from '../../components/spinner/spinner';
@@ -11,7 +11,7 @@ import Spinner from '../../components/spinner/spinner';
 function PlayerPage(): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
-  const film = useAppSelector(selectFilm);
+  const film = useAppSelector(getFilm);
   const dispatch = useAppDispatch();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);

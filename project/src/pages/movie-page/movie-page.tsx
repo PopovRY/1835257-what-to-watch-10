@@ -9,29 +9,35 @@ import {AuthorizationStatus, Tab} from '../../consts';
 import {fetchFilm, fetchFilmComments, fetchSimilarFilms} from '../../store/api-action';
 import {useEffect} from 'react';
 import AddReviewButton from '../../components/review-btn/review-btn';
-import {selectAuth} from '../../store/user-process/selectors';
-import {selectComments, selectFilm, selectSimilarFilms} from '../../store/film-process/selectors';
+import {getAuth} from '../../store/user-process/selectors';
+import {getFilm, getSimilarFilms} from '../../store/film-process/selectors';
 import {getTab} from '../../utils';
 import Overview from '../../components/overview/overview';
 import Details from '../../components/details/details';
 import Reviews from '../../components/reviews/reviews';
 import MyListBtn from '../../components/my-list-button/my-list-button';
+import MyListButtonNoAuth from '../../components/my-list-button-no-auth/my-list-button-no-auth';
+import {getComments} from '../../store/add-review-process/selectors';
 
 function MoviePage(): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector(selectAuth);
-  const filmComments = useAppSelector(selectComments);
-  const film = useAppSelector(selectFilm);
-  const similarFilms = useAppSelector(selectSimilarFilms);
+  const authStatus = useAppSelector(getAuth);
+  const filmComments = useAppSelector(getComments);
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilarFilms);
 
   const {backgroundImage, name, genre, released, id, posterImage, backgroundColor } = film;
 
+  const filmID = String(id);
+
   useEffect(() => {
-    dispatch(fetchFilm(params.id));
-    dispatch(fetchSimilarFilms(params.id));
-    dispatch(fetchFilmComments(params.id));
+    if (params.id) {
+      dispatch(fetchFilm(params.id));
+      dispatch(fetchSimilarFilms(params.id));
+      dispatch(fetchFilmComments(params.id));
+    }
   }, [dispatch, params.id]);
 
   const onPlayButtonClickHandler = () => {
@@ -76,7 +82,7 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <MyListBtn />
+                {authStatus === AuthorizationStatus.Auth ? <MyListBtn filmID={filmID} /> : <MyListButtonNoAuth />}
                 {authStatus === AuthorizationStatus.Auth && <AddReviewButton id={id} />}
               </div>
             </div>

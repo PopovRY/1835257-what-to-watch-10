@@ -1,51 +1,86 @@
-import ErrorMessage from '../error-message/error-message';
-import {FormEvent, useEffect, useRef} from 'react';
+import {FormEvent, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useNavigate} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {loginAction} from '../../store/api-action';
 import {AppRoute, AuthorizationStatus} from '../../consts';
-import {selectAuth, selectError} from '../../store/user-process/selectors';
+import {getAuth, getError, getIsLoginSending} from '../../store/user-process/selectors';
+import {signInValidator} from '../../utils';
+import {setError} from '../../store/user-process/user-process';
 
 function LoginForm(): JSX.Element {
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectError);
-  const authStatus = useAppSelector(selectAuth);
-  const navigate = useNavigate();
+  const error = useAppSelector(getError);
+  const authStatus = useAppSelector(getAuth);
+  const isSending = useAppSelector(getIsLoginSending);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
 
   const handleFromSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(loginAction({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      }));
+    const validError = signInValidator(email, password);
+
+    if (validError) {
+      dispatch(setError(validError));
+    } else {
+      dispatch(loginAction({ login: email, password }));
     }
   };
 
-  useEffect(() => {
-    if (authStatus === AuthorizationStatus.Auth) {
-      navigate(AppRoute.Main);
-    }
-  }, [authStatus, navigate]);
+  if (authStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main} />;
+  }
 
   return (
     <form action="#" className="sign-in__form" onSubmit={handleFromSubmit}>
-      {error ? <ErrorMessage /> : null}
+      {error &&
+        <div className="sign-in__message">
+          <p data-testid="auth-error">{error}</p>
+        </div>}
       <div className="sign-in__fields">
-        <div className={error ? 'sign-in__field sign-in__field--error' : 'sign-in__field'}>
-          <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" required />
+        <div className='sign-in__field'>
+          <input
+            className="sign-in__input"
+            type="email"
+            placeholder="Email address"
+            name="user-email"
+            id="user-email"
+            data-testid="user-email"
+            value={email}
+            onChange={(evt) => setEmail(evt.target.value)}
+            disabled={isSending}
+            required
+          />
           <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
         </div>
         <div className="sign-in__field">
-          <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" minLength={2} required />
+          <input
+            className="sign-in__input"
+            type="password"
+            placeholder="Password"
+            name="user-password"
+            id="user-password"
+            data-testid="user-password"
+            value={password}
+            onChange={(evt) => setPassword(evt.target.value)}
+            required
+          />
           <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
         </div>
       </div>
       <div className="sign-in__submit">
-        <button className="sign-in__btn" type="submit">Sign in</button>
+        <button
+          className="sign-in__btn"
+          type="submit"
+          disabled={isSending}
+        >
+          {
+            !isSending
+              ? 'Sign In'
+              : 'Sending...'
+          }
+        </button>
       </div>
     </form>
   );
