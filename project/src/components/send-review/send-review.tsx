@@ -27,7 +27,7 @@ function SendingReviewsForm(): JSX.Element {
     const key = String(10 - i);
 
     return (
-      <React.Fragment key={`${i}`}>
+      <React.Fragment key={key}>
         <input
           className="rating__input"
           id={`star-${key}`}
@@ -57,7 +57,6 @@ function SendingReviewsForm(): JSX.Element {
           {starsButtonList}
         </div>
       </div>
-
       <div className="add-review__text">
         <textarea
           className="add-review__textarea"

@@ -1,7 +1,7 @@
 import {Film} from '../../types/film';
 import FilmCard from '../film-card/film-card';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {SHOW_MORE_NEXT_COUNT} from '../../consts';
+import {DEFAULT_GENRE, SHOW_MORE_NEXT_COUNT} from '../../consts';
 import {showMore} from '../../store/action';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {getGenre, getRenderedFilmCount} from '../../store/films-process/selectors';
@@ -12,9 +12,9 @@ function FilmsListMain({ films }: { films: Film[] }): JSX.Element {
   const dispatch = useAppDispatch();
   const selectedGenre = useAppSelector(getGenre);
   const renderedFilmCount = useAppSelector(getRenderedFilmCount);
-  const sortedFilms = films.filter((film) => selectedGenre === 'All genres' ? films : film.genre === selectedGenre);
+  const sortedFilms = films.filter((film) => selectedGenre === DEFAULT_GENRE ? films : film.genre === selectedGenre);
 
-  const onShowMoreBtnClick = () => {
+  const handleOnShowMoreBtnClick = () => {
     dispatch(showMore(renderedFilmCount + SHOW_MORE_NEXT_COUNT));
   };
 
@@ -34,7 +34,7 @@ function FilmsListMain({ films }: { films: Film[] }): JSX.Element {
       </div>
       {
         isShowBtn &&
-        <ShowMoreButton onClick={onShowMoreBtnClick} />
+        <ShowMoreButton onClick={handleOnShowMoreBtnClick} />
       }
     </>
   );

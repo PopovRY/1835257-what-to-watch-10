@@ -10,7 +10,7 @@ function GenreTabs(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const onTabClickHandler = (evt: React.MouseEvent) => {
+  const handleOnTabClick = (evt: React.MouseEvent) => {
     const clickedGenre = evt.currentTarget.textContent;
     if (clickedGenre !== null) {
       dispatch(changeGenre(clickedGenre));
@@ -20,7 +20,7 @@ function GenreTabs(): JSX.Element {
 
   const generateGenreTab =
     genres.map((genre) => (
-      <GenreButton key={genre} genre={genre} isActive={selectedGenre === genre} onClick={onTabClickHandler} />
+      <GenreButton key={genre} genre={genre} isActive={selectedGenre === genre} onClick={handleOnTabClick} />
     )).slice(0, MAX_GENRES_COUNT);
 
 

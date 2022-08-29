@@ -2,17 +2,19 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import FilmCard from '../../components/film-card/film-card';
-import {getFavoriteFilms} from '../../store/films-process/selectors';
+import {getFavoriteFilms, getLoadingDataStatus} from '../../store/films-process/selectors';
 import {useEffect} from 'react';
 import {fetchFavorites} from '../../store/api-action';
+import PreLoader from '../../components/pre-loader/pre-loader';
 
 
 function MyListPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const favoriteFilmsLength = useAppSelector(getFavoriteFilms).length;
-  const favsFilms = useAppSelector(getFavoriteFilms);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
+  const isDataLoader = useAppSelector(getLoadingDataStatus);
   const filmsList =
-    favsFilms?.map((film) => (
+    favoriteFilms?.map((film) => (
       <FilmCard key={film.id}
         film={film}
       />
@@ -24,6 +26,7 @@ function MyListPage(): JSX.Element {
 
   return (
     <div className="user-page">
+      { isDataLoader ? <PreLoader /> : '' }
       <Header
         isMyList
         favoriteCount={favoriteFilmsLength}

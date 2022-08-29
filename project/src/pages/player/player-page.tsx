@@ -30,7 +30,7 @@ function PlayerPage(): JSX.Element {
       : videoRef.current?.pause();
   }, [isPlaying]);
 
-  const onExitButtonClickHandler = () => {
+  const handleOnExitButtonClick = () => {
     const path = `/films/${film.id}`;
     navigate(path);
   };
@@ -91,7 +91,7 @@ function PlayerPage(): JSX.Element {
       >
       </video>
 
-      <button type="button" className="player__exit" onClick={onExitButtonClickHandler}>Exit</button>
+      <button type="button" className="player__exit" onClick={handleOnExitButtonClick}>Exit</button>
 
       {
         isLoading &&

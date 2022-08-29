@@ -1,7 +1,6 @@
 import Footer from '../../components/footer/footer';
 import {useNavigate, useParams} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
-import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../../components/header/header';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import SimilarFilms from '../../components/similar-films/similar-films';
@@ -16,8 +15,8 @@ import Overview from '../../components/overview/overview';
 import Details from '../../components/details/details';
 import Reviews from '../../components/reviews/reviews';
 import MyListBtn from '../../components/my-list-button/my-list-button';
-import MyListButtonNoAuth from '../../components/my-list-button-no-auth/my-list-button-no-auth';
 import {getComments} from '../../store/add-review-process/selectors';
+import PreLoader from '../../components/pre-loader/pre-loader';
 
 function MoviePage(): JSX.Element {
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ function MoviePage(): JSX.Element {
     }
   }, [dispatch, params.id]);
 
-  const onPlayButtonClickHandler = () => {
+  const hanldleOnPlayButtonClick = () => {
     const path = `/player/${id}`;
     navigate(path);
   };
@@ -52,7 +51,7 @@ function MoviePage(): JSX.Element {
   };
 
   if (!name) {
-    return <NotFoundPage />;
+    return <PreLoader />;
   }
 
   return (
@@ -76,13 +75,13 @@ function MoviePage(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button" onClick={onPlayButtonClickHandler}>
+                <button className="btn btn--play film-card__button" type="button" onClick={hanldleOnPlayButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                {authStatus === AuthorizationStatus.Auth ? <MyListBtn filmID={filmID} /> : <MyListButtonNoAuth />}
+                <MyListBtn filmID={filmID} />
                 {authStatus === AuthorizationStatus.Auth && <AddReviewButton id={id} />}
               </div>
             </div>

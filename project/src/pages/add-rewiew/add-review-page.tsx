@@ -5,6 +5,7 @@ import {useEffect} from 'react';
 import {fetchFilm} from '../../store/api-action';
 import {getFilm} from '../../store/film-process/selectors';
 import Header from '../../components/header/header';
+import PreLoader from '../../components/pre-loader/pre-loader';
 
 
 function AddReviewPage(): JSX.Element {
@@ -17,6 +18,10 @@ function AddReviewPage(): JSX.Element {
   useEffect(() => {
     dispatch(fetchFilm(params.id));
   }, [dispatch, params.id]);
+
+  if (!name) {
+    return <PreLoader />;
+  }
 
   return (
     <section className="film-card film-card--full">
