@@ -9,11 +9,7 @@ export const useValidComment = (comment: string, rating: number) => {
       comment.length > CommentLength.Min &&
       comment.length < CommentLength.Max;
 
-    if (validComment && rating > DEFALUT_RATING_VALUE) {
-      setIsValidForm(true);
-    } else {
-      setIsValidForm(false);
-    }
+    setIsValidForm(validComment && rating > DEFALUT_RATING_VALUE);
   }, [comment, rating]);
 
   return isValidForm;

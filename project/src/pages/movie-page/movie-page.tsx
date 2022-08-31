@@ -17,6 +17,7 @@ import Reviews from '../../components/reviews/reviews';
 import MyListBtn from '../../components/my-list-button/my-list-button';
 import {getComments} from '../../store/add-review-process/selectors';
 import PreLoader from '../../components/pre-loader/pre-loader';
+import {setFilm} from '../../store/action';
 
 function MoviePage(): JSX.Element {
   const navigate = useNavigate();
@@ -37,6 +38,10 @@ function MoviePage(): JSX.Element {
       dispatch(fetchSimilarFilms(params.id));
       dispatch(fetchFilmComments(params.id));
     }
+
+    return () => {
+      dispatch(setFilm({}));
+    };
   }, [dispatch, params.id]);
 
   const hanldleOnPlayButtonClick = () => {
